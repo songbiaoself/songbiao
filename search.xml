@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>idea项目一键部署增强版（经验篇)</title>
+    <url>/2022/04/05/idea%E9%A1%B9%E7%9B%AE%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%A2%9E%E5%BC%BA%E7%89%88%EF%BC%88%E7%BB%8F%E9%AA%8C%E7%AF%87/</url>
+    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ol>
+<li>本次介绍的插件特别适用于小型单体项目部署，摆脱一切的繁琐部署操作，相对与CI&#x2F;CD流程配置更加简单快捷。</li>
+<li>我们每次打包后的项目都特别大，其中主要是依赖的jar包占用了大量的空间，而且每次部署都进行了上传，但每次做修改的只有代码。</li>
+<li><strong>所以代码和jar包分离是提升部署效率的关键。</strong></li>
+</ol>
+<h2 id="1-idea配置"><a href="#1-idea配置" class="headerlink" title="1.idea配置"></a>1.idea配置</h2><p>1.安装插件（我这里已经安装好了）<br><img src="https://img-blog.csdnimg.cn/677e806c05c64ab8b34ba69d1c6f8307.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<h2 id="2-toolkit配置"><a href="#2-toolkit配置" class="headerlink" title="2.toolkit配置"></a>2.toolkit配置</h2><p>1.安装后重启idea，点击add host添加服务器连接<br>host填对应部署的服务器公网ip<br>端口默认22<br>再填入username和password后点add添加即可。<br><img src="https://img-blog.csdnimg.cn/7168886be9044debb3181973a03fb211.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>2.点击idea标签页tools&#x2F;Alibaba colud&#x2F;Deploy to Host进入部署脚本页面<br>添加刚刚添加的服务器。</p>
+<p><strong>下是部署脚本</strong><br><strong>改自己需要部署的端口和部署路径。</strong></p>
+<p>before deploy：<br>项目上传前的清理操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rm -rf /home/*; </span><br><span class="line">kill -9 $(netstat -nlp | grep :8080 | awk &#x27;&#123;print $7&#125;&#x27; | awk -F&quot;/&quot; &#x27;&#123; print $1 &#125;&#x27;)</span><br></pre></td></tr></table></figure>
+<p>after deploy:<br>上传后的部署启动操作</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nohup java -jar /home/xxx.ar &gt; nohup.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p>预览：<br><img src="https://img-blog.csdnimg.cn/2dca1b2c0969441588d017b292a248b0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/5c602de2c23a4cc9924ecb6ac395da6c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/31d0d4115d0d4aa2af0cad7521a60e5a.png" alt="在这里插入图片描述"><br>配置maven打包，跳过测试，提升效率<br><img src="https://img-blog.csdnimg.cn/c3bdbe2379854e2ba1a61ef6138a64c7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<p>配置好后我们就可以点击run执行完成部署。<br><img src="https://img-blog.csdnimg.cn/a535a73d426945aa9548795aad0ed097.png" alt="在这里插入图片描述"><br>但是因为jar包太大部署的速度还是太慢了，下是提升部署速度的关键，采取下例配置后我的小项目一键部署只需10秒左右，十分方便上线测试，如果没有需求可以忽略。</p>
+<h2 id="3-依赖包分离部署（关键）"><a href="#3-依赖包分离部署（关键）" class="headerlink" title="3.依赖包分离部署（关键）"></a>3.依赖包分离部署（关键）</h2><p>起始配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>将正常打包的jar包解压</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jar -xvf xxx.jar</span><br></pre></td></tr></table></figure>
+
+<p><strong>将BOOT-INF&#x2F;lib文件夹先上传到服务器上，之后每次部署就不需要再上传依赖jar包了</strong></p>
+<p>修改pom.xml，打包不带依赖的jar包，只包含项目代码。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">       &lt;plugins&gt;</span><br><span class="line">           &lt;plugin&gt;</span><br><span class="line">               &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">               &lt;!--编译不带jar包--&gt;</span><br><span class="line">               &lt;configuration&gt;</span><br><span class="line">               	&lt;!--指定启动类--&gt;</span><br><span class="line">                   &lt;mainClass&gt;xx.xx.xx&lt;/mainClass&gt;</span><br><span class="line">                   &lt;layout&gt;ZIP&lt;/layout&gt;</span><br><span class="line">                   &lt;includes&gt;</span><br><span class="line">                       &lt;include&gt;</span><br><span class="line">                           &lt;groupId&gt;nothing&lt;/groupId&gt;</span><br><span class="line">                           &lt;artifactId&gt;nothing&lt;/artifactId&gt;</span><br><span class="line">                       &lt;/include&gt;</span><br><span class="line">                   &lt;/includes&gt;</span><br><span class="line">               &lt;/configuration&gt;</span><br><span class="line">               &lt;executions&gt;</span><br><span class="line">                   &lt;execution&gt;</span><br><span class="line">                       &lt;goals&gt;</span><br><span class="line">                           &lt;goal&gt;repackage&lt;/goal&gt;</span><br><span class="line">                       &lt;/goals&gt;</span><br><span class="line">                   &lt;/execution&gt;</span><br><span class="line">               &lt;/executions&gt;</span><br><span class="line">           &lt;/plugin&gt;</span><br><span class="line">       &lt;/plugins&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!--需要打包的文件--&gt;</span><br><span class="line">       &lt;resources&gt;</span><br><span class="line">           &lt;resource&gt;</span><br><span class="line">               &lt;directory&gt;src/main/java&lt;/directory&gt;</span><br><span class="line">               &lt;includes&gt;</span><br><span class="line">                   &lt;include&gt;**/*.yml&lt;/include&gt;</span><br><span class="line">                   &lt;include&gt;**/*.properties&lt;/include&gt;</span><br><span class="line">                   &lt;include&gt;**/*.xml&lt;/include&gt;</span><br><span class="line">               &lt;/includes&gt;</span><br><span class="line">               &lt;filtering&gt;false&lt;/filtering&gt;</span><br><span class="line">           &lt;/resource&gt;</span><br><span class="line">           &lt;resource&gt;</span><br><span class="line">               &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">               &lt;includes&gt;</span><br><span class="line">                   &lt;include&gt;**/*.yml&lt;/include&gt;</span><br><span class="line">                   &lt;include&gt;**/*.properties&lt;/include&gt;</span><br><span class="line">                   &lt;include&gt;**/*.xml&lt;/include&gt;</span><br><span class="line">               &lt;/includes&gt;</span><br><span class="line">               &lt;filtering&gt;false&lt;/filtering&gt;</span><br><span class="line">           &lt;/resource&gt;</span><br><span class="line">       &lt;/resources&gt;</span><br><span class="line"></span><br><span class="line">   &lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<p>打包后的项目从几百几十mb变成了几百kb。<br>修改after deploy:<br>path后指定你存放的lib绝对路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nohup java -Dloader.path=/home/lib -jar /home/xxx.ar &gt; nohup.log 2&gt;&amp;1 &amp; </span><br></pre></td></tr></table></figure>
+<h2 id="4-测试"><a href="#4-测试" class="headerlink" title="4.测试"></a>4.测试</h2><p>均全自动部署(上传嗖的一下就过去了哦～)，接下来就是tea time~<br><img src="https://img-blog.csdnimg.cn/b3cf0b0e5a304ef1833342a58ccf71b0.gif" alt="在这里插入图片描述"></p>
+]]></content>
+      <categories>
+        <category>java</category>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>经验篇</tag>
+        <tag>自动化部署</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis-sentinel哨兵攻略</title>
+    <url>/2022/04/05/redis-sentinel%E5%93%A8%E5%85%B5%E6%94%BB%E7%95%A5/</url>
+    <content><![CDATA[<h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1.简介"></a>1.简介</h2><p>凌晨2点，你睡得正香，老板就突然打电话过来说，redis服务器炸了，网站瘫痪了！你不得不起床打开电脑开始苦逼的解决问题：重新配置redis，把项目的redis的地址切换到从节点的redis，然后重新打包项目，部署等一系列困扰你睡美梦的操作。<strong>然而，如果你配置redis哨兵，这一切将不会发生，你还可以继续睡你的美梦。</strong></p>
+<h3 id="1-1sentinel-架构"><a href="#1-1sentinel-架构" class="headerlink" title="1.1sentinel 架构"></a>1.1sentinel 架构</h3><p>三个哨兵充当对redis实例的实时监控，如果主节点挂掉，哨兵察觉到后立即在两个从节点中选举新的master，当挂掉的主节点恢复正常后，充当新master的从节点。<br><img src="https://img-blog.csdnimg.cn/20201011162636574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI2MDA3MjI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="2-主从配置"><a href="#2-主从配置" class="headerlink" title="2.主从配置"></a>2.主从配置</h2><p>你需要有三个redis实例，一个主节点和两个从节点<br>关于主从同步的配置可以看我的这篇博客<br><strong>注意：我的redis是5版本的</strong><br><a class="link"   href="https://blog.csdn.net/qq_26007225/article/details/108975751" >redis主从复制<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="3-sentinel配置"><a href="#3-sentinel配置" class="headerlink" title="3.sentinel配置"></a>3.sentinel配置</h2><p>在每一份redis实例上创建一份配置文件，在单机环境中，确保端口唯一即可（其他的配置不需要动）</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#启动端口</span><br><span class="line">port 26379</span><br><span class="line">#监控主节点redis 服务名 ip和端口 当两个哨兵觉得主节点不可用时主节点下线</span><br><span class="line">sentinel monitor mymaster 主节点redis的ip 端口 2</span><br><span class="line">#5秒内主节点没有响应认定为挂掉了</span><br><span class="line">sentinel down-after-milliseconds mymaster 5000</span><br><span class="line">#选举另一个master超时时间</span><br><span class="line">sentinel failover-timeout mymaster 60000</span><br><span class="line">#选举中 最多有一个从节点同步主节点</span><br><span class="line">sentinel parallel-syncs mymaster 1</span><br></pre></td></tr></table></figure>
+<p>ok，现在我们的整个环境搭建，三个redis实例和三个sentinel实例，我是在单机的centos环境下测试，<strong>在这里请各位读者十分的注意自己的ip和端口避免弄错！</strong> 我这里使用的外网的ip，你可以用内网本地ip即可。</p>
+<table>
+<thead>
+<tr>
+<th>实例</th>
+<th>ip:port</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>redis1</td>
+<td>192.168.72.134:6379</td>
+</tr>
+<tr>
+<td>redis2</td>
+<td>192.168.72.134:6380</td>
+</tr>
+<tr>
+<td>redis3</td>
+<td>192.168.72.134:6381</td>
+</tr>
+<tr>
+<td>sentinel1</td>
+<td>192.168.72.134:26379</td>
+</tr>
+<tr>
+<td>sentinel2</td>
+<td>192.168.72.134:26380</td>
+</tr>
+<tr>
+<td>sentinel3</td>
+<td>192.168.72.134:26381</td>
+</tr>
+</tbody></table>
+<p>我们打开主节点redis实例客户端 查看具体信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@localhost redis-5.0.3]# redis</span><br><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">#角色是master 其他从节点为salve</span><br><span class="line">role:master</span><br><span class="line">connected_slaves:2</span><br><span class="line">#可以看到下面两个从节点实例 如果你的没有 请务必检查自己的操作步骤</span><br><span class="line">slave0:ip=192.168.72.134,port=6381,state=online,offset=28,lag=1</span><br><span class="line">slave1:ip=192.168.72.134,port=6380,state=online,offset=28,lag=1</span><br><span class="line">master_replid:7387ff36c2ebcf7d1440e07c5cc006c96ae414c3</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:42</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:1</span><br><span class="line">repl_backlog_histlen:42</span><br></pre></td></tr></table></figure>
+<p>我们启动三个哨兵实例，如下图<br><img src="https://img-blog.csdnimg.cn/20201011162233975.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI2MDA3MjI1,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>启动任一sentinel客户端，查看其信息</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[root@localhost redis-5.0.3]# redis-cli -p 26379</span><br><span class="line">127.0.0.1:26379&gt; sentinel master mymaster</span><br><span class="line"> 1) &quot;name&quot;</span><br><span class="line"> 2) &quot;mymaster&quot;</span><br><span class="line"> 3) &quot;ip&quot;</span><br><span class="line"> 4) &quot;192.168.72.134&quot;</span><br><span class="line"> 5) &quot;port&quot;</span><br><span class="line"> 6) &quot;6379&quot;</span><br><span class="line"> 7) &quot;runid&quot;</span><br><span class="line"> 8) &quot;f51aee2ec220f0f662c248542bf9d03c86cc3834&quot;</span><br><span class="line"> 9) &quot;flags&quot;</span><br><span class="line">10) &quot;master&quot;</span><br><span class="line">11) &quot;link-pending-commands&quot;</span><br><span class="line">12) &quot;0&quot;</span><br><span class="line">13) &quot;link-refcount&quot;</span><br><span class="line">14) &quot;1&quot;</span><br><span class="line">15) &quot;last-ping-sent&quot;</span><br><span class="line">16) &quot;0&quot;</span><br><span class="line">17) &quot;last-ok-ping-reply&quot;</span><br><span class="line">18) &quot;514&quot;</span><br><span class="line">19) &quot;last-ping-reply&quot;</span><br><span class="line">20) &quot;514&quot;</span><br><span class="line">21) &quot;down-after-milliseconds&quot;</span><br><span class="line">22) &quot;5000&quot;</span><br><span class="line">23) &quot;info-refresh&quot;</span><br><span class="line">24) &quot;1239&quot;</span><br><span class="line">25) &quot;role-reported&quot;</span><br><span class="line">26) &quot;master&quot;</span><br><span class="line">27) &quot;role-reported-time&quot;</span><br><span class="line">28) &quot;121624&quot;</span><br><span class="line">29) &quot;config-epoch&quot;</span><br><span class="line">30) &quot;4&quot;</span><br><span class="line">31) &quot;num-slaves&quot;</span><br><span class="line">32) &quot;2&quot;</span><br><span class="line">33) &quot;num-other-sentinels&quot;</span><br><span class="line">34) &quot;2&quot;</span><br><span class="line">35) &quot;quorum&quot;</span><br><span class="line">36) &quot;2&quot;</span><br><span class="line">37) &quot;failover-timeout&quot;</span><br><span class="line">38) &quot;180000&quot;</span><br><span class="line">39) &quot;parallel-syncs&quot;</span><br><span class="line">40) &quot;1&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以看到num-slaves和num-other-sentinels都是2，前者是从节点数量，后者是关联的哨兵数量，如果你的参数异常，请检查你的操作步骤。</p>
+<h2 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h2><p>查看当前的master<br>显然是我们前面哨兵配置中监听的主节点</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:26379&gt; SENTINEL get-master-addr-by-name mymaster</span><br><span class="line">1) &quot;192.168.72.134&quot;</span><br><span class="line">2) &quot;6379&quot;</span><br></pre></td></tr></table></figure>
+<p>宕机测试：<br>现在我们关闭redis 6379实例30秒</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">redis-cli -p 6379 DEBUG sleep 30</span><br></pre></td></tr></table></figure>
+<p>再查看主节点时发现已经切换6380端口的redis实例</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:26379&gt; SENTINEL get-master-addr-by-name mymaster</span><br><span class="line">1) &quot;192.168.72.134&quot;</span><br><span class="line">2) &quot;6380&quot;</span><br></pre></td></tr></table></figure>
+
+<p>6379实例恢复时，我们可以看到它变成了从节点</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info replication</span><br><span class="line"># Replication</span><br><span class="line">role:slave</span><br><span class="line">master_host:192.168.72.134</span><br><span class="line">master_port:6380</span><br><span class="line">master_link_status:up</span><br><span class="line">master_last_io_seconds_ago:0</span><br><span class="line">master_sync_in_progress:0</span><br><span class="line">slave_repl_offset:415421</span><br><span class="line">slave_priority:100</span><br><span class="line">slave_read_only:1</span><br><span class="line">connected_slaves:0</span><br><span class="line">master_replid:c6eba63129405a3f0fe2786b974fa2048179bafd</span><br><span class="line">master_replid2:0000000000000000000000000000000000000000</span><br><span class="line">master_repl_offset:415421</span><br><span class="line">second_repl_offset:-1</span><br><span class="line">repl_backlog_active:1</span><br><span class="line">repl_backlog_size:1048576</span><br><span class="line">repl_backlog_first_byte_offset:393523</span><br><span class="line">repl_backlog_histlen:21899</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p>本次教程就到此结束，请读者严格按照每一步操作来，避免踩坑。<br>当你再打开redis的配置文件查看最底部时，你会发现其中的主从配置ip和端口已经被sentinel动态的修改，每一次的宕机，sentinel都会对配置文件进行动态的修改。<br>如果此篇文章对你有用，不妨点个赞吧！一起加油</p>
+]]></content>
+      <categories>
+        <category>redis</category>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>redis主从复制完整攻略</title>
+    <url>/2022/04/05/redis%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%AE%8C%E6%95%B4%E6%94%BB%E7%95%A5/</url>
+    <content><![CDATA[<h2 id="1-主从配置"><a href="#1-主从配置" class="headerlink" title="1.主从配置"></a>1.主从配置</h2><h3 id="1-1单机"><a href="#1-1单机" class="headerlink" title="1.1单机"></a>1.1单机</h3><p>在服务器中copy一份redis.cnf</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost redis-5.0.3]<span class="comment"># cp redis.conf slave-redis.cnf</span></span><br></pre></td></tr></table></figure>
+<p>修改端口号、pid文件、指定主redis的ip和端口</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@localhost redis-5.0.3]<span class="comment"># vim slave-redis.cnf</span></span><br><span class="line"></span><br><span class="line">port 6380</span><br><span class="line"><span class="comment">#改为唯一即可</span></span><br><span class="line">pidfile /var/run/redis_6380.pid</span><br><span class="line"><span class="comment">#5版本后是replicaof 有的版本可能为slaveof 自己留意</span></span><br><span class="line">replicaof 127.0.0.1 6379</span><br></pre></td></tr></table></figure>
+<h3 id="1-2测试"><a href="#1-2测试" class="headerlink" title="1.2测试"></a>1.2测试</h3><p>启动redis从服务 启动端口为6380的客户端</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">redis-server slave-redis.cnf </span><br><span class="line">redis-cli -p 6380</span><br></pre></td></tr></table></figure>
+<p>在主redis上添加数据</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> 1 1</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<p>从redis</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6380&gt; get 1</span><br><span class="line"><span class="string">&quot;1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-同步原理"><a href="#2-同步原理" class="headerlink" title="2.同步原理"></a>2.同步原理</h2><p>如果你的redis仅当作缓存来使用，可以不必操太多的心，但是用到了持久化的功能，也就是当作一个数据库来使用，数据的持久性和一致性是必须得以重视！以下内容只针对主从同步原理做了讲解。</p>
+<h3 id="2-1增量同步"><a href="#2-1增量同步" class="headerlink" title="2.1增量同步"></a>2.1增量同步</h3><p>主节点会将自己做出的指令存储到本地buffer中，然后从节点异步的读取指令来尽可能达到和主节点的数据一致，因为buffer的内存有限，buffer的内存结构是一个<strong>环形数组</strong>，从头写到尾时（写完一圈），将会覆盖之前的指令数据。<br><strong>注意：</strong> 如果，从节点网络状态不好，无法和主节点同步数据，没来的及的同步数据被覆盖掉，这时，就需要下面的快照同步。</p>
+<h3 id="2-2快照同步"><a href="#2-2快照同步" class="headerlink" title="2.2快照同步"></a>2.2快照同步</h3><p>这是一个十分耗时的操作。<br>首先主节点会进行一次内存全盘扫描（bgsave），将内存中的所有数据写入到磁盘中，写入完毕时后传送到从节点，从节点接受完毕后，首先将内存清空，然后执行一次全量加载，再然后进行增量同步。<br><strong>注意：</strong> 在从节中快照同步的同时，主节点的操作指令依旧在写到buffer中，如果快照同步十分的耗时，以至于buffer中的指令又被覆盖，那么将陷入死循环中！<br><strong>为了避免死循环，请合适的设置buffer容量参数。</strong></p>
+<h3 id="2-3无盘复制"><a href="#2-3无盘复制" class="headerlink" title="2.3无盘复制"></a>2.3无盘复制</h3><p>自redis 2.8.18版本后，引入了无盘复制，主节点直接通过套接字将内容传递给从节点。主节点一边遍历内存一边将序列化的内容传送到从节点中，从节点先将接收到的数据存入到磁盘中，最后执行一次全量加载。</p>
+<p><strong>新加入的从节点，必须先进行一次快照同步，后再进行增量同步</strong></p>
+<p>文章文献参考《redis深度历险核心原理与应用实践》</p>
+]]></content>
+      <categories>
+        <category>redis</category>
+      </categories>
+      <tags>
+        <tag>分布式</tag>
+        <tag>主从复制</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>非对称加密与数字证书</title>
+    <url>/2022/04/05/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8E%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</url>
+    <content><![CDATA[<h2 id="一、信息传递"><a href="#一、信息传递" class="headerlink" title="一、信息传递"></a>一、信息传递</h2><p>事情是这样的,小明在青春懵懂的时候迷恋上了小红。<br><img src="https://img-blog.csdnimg.cn/20210612135732929.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI2MDA3MjI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>但得知小红和小华走的很近，并且每天都会发送短信聊天，小明很想知道小华和小红到底在聊些什么。</p>
+<h3 id="1-信息窃取"><a href="#1-信息窃取" class="headerlink" title="1.信息窃取"></a>1.信息窃取</h3><p>在一次偶然的机会，小明打开了小红的手机，并查看了小红和小华的聊天记录，于是小明窃取到了小红和小华的聊天信息。</p>
+<h3 id="2-信息加密"><a href="#2-信息加密" class="headerlink" title="2.信息加密"></a>2.信息加密</h3><p>而同学小赖将看到的这一切告诉了小红，小红很生气，很害怕信息再次泄露，于是，他和小华决定对信息进行加密，就算信息被小明看到也无济于事。</p>
+<h2 id="二、对称加密"><a href="#二、对称加密" class="headerlink" title="二、对称加密"></a>二、对称加密</h2><p>聪明的小华想到，只要和小红事先约定好使用一个<strong>密钥</strong>。这样，小红把要发送的信息加密后发送，小华对接收的密文再用密钥进行解密。</p>
+<blockquote>
+<p><strong>对称加密</strong>，常用于密码加解密，应用场景相对简单，仅仅一个密钥。</p>
+</blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20210612141757109.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI2MDA3MjI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="1-密钥泄露"><a href="#1-密钥泄露" class="headerlink" title="1.密钥泄露"></a>1.密钥泄露</h3><p>很不凑巧的是，就在小华将密钥告诉小红的时候，被同学小赖给听到了。放学后，小赖以5根冰淇淋的代价告诉了小明。</p>
+<blockquote>
+<p>密钥的传递过程避免不了密钥的泄露，除非该密钥不传递</p>
+</blockquote>
+<p>小华知道后，很是懊恼，决定换一个密钥，但是聪明的小华想了想，有没有办法即使小明得到了密钥，小明也不能破译其中的信息呢?</p>
+<h2 id="三、非对称加密"><a href="#三、非对称加密" class="headerlink" title="三、非对称加密"></a>三、非对称加密</h2><p>小华一夜未眠，在天亮之时，灵机一闪。<br>他发明了两个密钥，称为<strong>私钥</strong>和<strong>公钥</strong>。</p>
+<blockquote>
+<p>私钥可以解密公钥加密的信息，公钥也可以解密私钥加密的信息</p>
+</blockquote>
+<p>他首先将公钥告诉了小红，自己保留着除了上帝以外没有人知道的私钥，小红得到公钥后，将信息加密后发送给小华，小华再用私钥进行解密。<br><img src="https://img-blog.csdnimg.cn/20210612144538728.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI2MDA3MjI1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>即使小明能得到公钥，也不能对小红加密的信息进行破译。但是小华这时私钥加密的信息，就可能被拿到公钥的小明破解，于是，就需要小红再创建一对密钥，小红自己保留着私钥，将公钥告诉小华，小华再用小红的公钥加密信息后发送给小红，小红接受到后再用自己的私钥进行解密。</p>
+<h2 id="四、进阶选读"><a href="#四、进阶选读" class="headerlink" title="四、进阶选读"></a>四、进阶选读</h2><h3 id="1-数字签名"><a href="#1-数字签名" class="headerlink" title="1.数字签名"></a>1.数字签名</h3><p>小华为了确保原信息没有被更改过，而给小红造成误解，于是小华将原信息进行hash，得到唯一的hash值，称为<strong>信息摘要</strong>，再用自己的私钥对hash值进行加密。<br>小华将原信息用小红的公钥进行加密后，连同信息摘要一同发送给小红（<strong>密文+信息摘要</strong>）。<br><img src="https://img-blog.csdnimg.cn/20210612151409837.png" alt="在这里插入图片描述"><br><strong>（上图中仅进行数字签名！）</strong></p>
+<p>小红收到小华发送的信息后，首先用私钥将密文解密，将解密后的信息进行hash得到hash值，再通过小华的公钥对加密的信息摘要解密，得到小华书写的原信息的hash值，将两个hash值进行对比。</p>
+<blockquote>
+<p>如果hash值一致，表示原信息没有被修改，否则信息是被修改过的</p>
+</blockquote>
+<p>小红便可舍弃这个修改过的信息。</p>
+<h3 id="2-数字证书"><a href="#2-数字证书" class="headerlink" title="2.数字证书"></a>2.数字证书</h3><p>可是让小华没想到的是，狡猾的小明也自己创建了一对密钥对，<strong>在小华给小红传递公钥的过程中，公钥被换成了小明自己的公钥</strong>，小红实际收到的是小明的公钥。这样小明便可以偷天换日，顶替了小华，这一举动称为<strong>中间人攻击</strong>。</p>
+<p>让接收方知情发送者，解决的办法有两个。</p>
+<h4 id="2-1公开公钥"><a href="#2-1公开公钥" class="headerlink" title="2.1公开公钥"></a>2.1公开公钥</h4><p>小华公开自己的公钥，小红在验证数字签名前，就已经知道小华的公钥是什么。</p>
+<h4 id="2-2数字证书"><a href="#2-2数字证书" class="headerlink" title="2.2数字证书"></a>2.2数字证书</h4><p>公正的班长(证书中心)也有一对密钥对，并且在班上<strong>公开了自己的公钥</strong>。<br>小华再给小红发送信息时，只需要将小华自己的<strong>公钥、信息和数字签名</strong>一同交给班长。<br>班长用自己的私钥加密后，便得到真正可信的<strong>数字证书</strong>。<br>小华将其发送给小红，小红便用班长公开的公钥进行解密，真正得到了小华的公钥和相关信息。<br>小明知道班长公正无私，已经哭晕在了厕所。</p>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>笔者的理解，只要密钥涉及传递，一定避免不了密钥泄露。最常用的方式便是非对称加密，如目前的RSA加密算法。<br>https也是采用数字证书的方式，笔者没有深入去了解，就不展开了。</p>
+<p>文章写到最后，笔者能力有限，文章存在知识误区，还请不吝指出，若文章对你有帮助，不妨点个赞对笔者支持一下把(●’◡’●)</p>
+<p><em>文章图片素材全部来源于网络，侵权请联系我删除。</em> </p>
+]]></content>
+      <categories>
+        <category>密码学</category>
+      </categories>
+      <tags>
+        <tag>对称/非对称加密</tag>
+      </tags>
+  </entry>
+</search>
