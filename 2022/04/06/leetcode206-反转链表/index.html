@@ -9,7 +9,7 @@
     
     <title>
         
-            idea项目一键部署增强版（经验篇) |
+            leetcode206. 反转链表 |
         
         宋标的blog
     </title>
@@ -150,7 +150,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">idea项目一键部署增强版（经验篇)</span>
+            <span class="title-hover-animation">leetcode206. 反转链表</span>
         </div>
 
         
@@ -169,8 +169,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-04-05 20:43:36</span>
-        <span class="mobile">2022-04-05 20:43</span>
+        <span class="pc">2022-04-06 18:21:46</span>
+        <span class="mobile">2022-04-06 18:21</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -178,11 +178,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/java/">java</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        &gt; <a href="/categories/java/%E5%B7%A5%E5%85%B7/">工具</a>&nbsp;
+                        <a href="/categories/leetcode/">leetcode</a>&nbsp;
                     </li>
                 
             </ul>
@@ -194,11 +190,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E7%BB%8F%E9%AA%8C%E7%AF%87/">经验篇</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">自动化部署</a>&nbsp;
+                        <a href="/tags/%E9%93%BE%E8%A1%A8/">链表</a>&nbsp;
                     </li>
                 
             </ul>
@@ -217,32 +209,32 @@
         
 
         <div class="article-content markdown-body">
-            <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ol>
-<li>本次介绍的插件特别适用于小型单体项目部署，摆脱一切的繁琐部署操作，相对与CI&#x2F;CD流程配置更加简单快捷。</li>
-<li>我们每次打包后的项目都特别大，其中主要是依赖的jar包占用了大量的空间，而且每次部署都进行了上传，但每次做修改的只有代码。</li>
-<li><strong>所以代码和jar包分离是提升部署效率的关键。</strong></li>
-</ol>
-<h2 id="1-idea配置"><a href="#1-idea配置" class="headerlink" title="1.idea配置"></a>1.idea配置</h2><p>1.安装插件（我这里已经安装好了）<br><img src="https://img-blog.csdnimg.cn/677e806c05c64ab8b34ba69d1c6f8307.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
-<h2 id="2-toolkit配置"><a href="#2-toolkit配置" class="headerlink" title="2.toolkit配置"></a>2.toolkit配置</h2><p>1.安装后重启idea，点击add host添加服务器连接<br>host填对应部署的服务器公网ip<br>端口默认22<br>再填入username和password后点add添加即可。<br><img src="https://img-blog.csdnimg.cn/7168886be9044debb3181973a03fb211.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>2.点击idea标签页tools&#x2F;Alibaba colud&#x2F;Deploy to Host进入部署脚本页面<br>添加刚刚添加的服务器。</p>
-<p><strong>下是部署脚本</strong><br><strong>改自己需要部署的端口和部署路径。</strong></p>
-<p>before deploy：<br>项目上传前的清理操作。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /home/*; </span><br><span class="line">kill -9 $(netstat -nlp | grep :8080 | awk &#x27;&#123;print $7&#125;&#x27; | awk -F&quot;/&quot; &#x27;&#123; print $1 &#125;&#x27;)</span><br></pre></td></tr></table></figure>
-<p>after deploy:<br>上传后的部署启动操作</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup java -jar /home/xxx.ar &gt; nohup.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<p>预览：<br><img src="https://img-blog.csdnimg.cn/2dca1b2c0969441588d017b292a248b0.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
-<p><img src="https://img-blog.csdnimg.cn/5c602de2c23a4cc9924ecb6ac395da6c.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/31d0d4115d0d4aa2af0cad7521a60e5a.png" alt="在这里插入图片描述"><br>配置maven打包，跳过测试，提升效率<br><img src="https://img-blog.csdnimg.cn/c3bdbe2379854e2ba1a61ef6138a64c7.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
-<p>配置好后我们就可以点击run执行完成部署。<br><img src="https://img-blog.csdnimg.cn/a535a73d426945aa9548795aad0ed097.png" alt="在这里插入图片描述"><br>但是因为jar包太大部署的速度还是太慢了，下是提升部署速度的关键，采取下例配置后我的小项目一键部署只需10秒左右，十分方便上线测试，如果没有需求可以忽略。</p>
-<h2 id="3-依赖包分离部署（关键）"><a href="#3-依赖包分离部署（关键）" class="headerlink" title="3.依赖包分离部署（关键）"></a>3.依赖包分离部署（关键）</h2><p>起始配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">        &lt;plugins&gt;</span><br><span class="line">            &lt;plugin&gt;</span><br><span class="line">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;/plugin&gt;</span><br><span class="line">        &lt;/plugins&gt;</span><br><span class="line">    &lt;/build&gt;</span><br></pre></td></tr></table></figure>
-<p>将正常打包的jar包解压</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jar -xvf xxx.jar</span><br></pre></td></tr></table></figure>
+            <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。</p>
+<p>示例 1：<br><img src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg" alt="图片1"></p>
+<blockquote>
+<p>输入：head &#x3D; [1,2,3,4,5]<br>输出：[5,4,3,2,1]</p>
+</blockquote>
+<p>示例 2：<br><img src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg"></p>
+<blockquote>
+<p>输入：head &#x3D; [1,2]<br>输出：[2,1]<br>示例 3：</p>
+</blockquote>
+<blockquote>
+<p>输入：head &#x3D; []<br>输出：[]
+ </p>
+</blockquote>
+<blockquote>
+<p>提示：<br>链表中节点的数目范围是 [0, 5000]<br>-5000 &lt;&#x3D; Node.val &lt;&#x3D; 5000
+ </p>
+</blockquote>
+<p>进阶：链表可以选用迭代或递归方式完成反转。你能否用两种方法解决这道题？</p>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-linked-list" >https://leetcode-cn.com/problems/reverse-linked-list<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><strong>迭代解法</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct ListNode *next;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">pre</span> =</span> <span class="literal">NULL</span>,*temp;</span><br><span class="line">    <span class="keyword">while</span>(head!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="comment">//保存下一个节点</span></span><br><span class="line">        temp = head-&gt;next;</span><br><span class="line">        <span class="comment">//指向前一个结点</span></span><br><span class="line">        head-&gt;next = pre;</span><br><span class="line">        <span class="comment">//当前结点作为下一趟遍历的前驱结点</span></span><br><span class="line">        pre = head;</span><br><span class="line">        <span class="comment">//恢复节点</span></span><br><span class="line">        head = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pre;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>将BOOT-INF&#x2F;lib文件夹先上传到服务器上，之后每次部署就不需要再上传依赖jar包了</strong></p>
-<p>修改pom.xml，打包不带依赖的jar包，只包含项目代码。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">       &lt;plugins&gt;</span><br><span class="line">           &lt;plugin&gt;</span><br><span class="line">               &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">               &lt;!--编译不带jar包--&gt;</span><br><span class="line">               &lt;configuration&gt;</span><br><span class="line">               	&lt;!--指定启动类--&gt;</span><br><span class="line">                   &lt;mainClass&gt;xx.xx.xx&lt;/mainClass&gt;</span><br><span class="line">                   &lt;layout&gt;ZIP&lt;/layout&gt;</span><br><span class="line">                   &lt;includes&gt;</span><br><span class="line">                       &lt;include&gt;</span><br><span class="line">                           &lt;groupId&gt;nothing&lt;/groupId&gt;</span><br><span class="line">                           &lt;artifactId&gt;nothing&lt;/artifactId&gt;</span><br><span class="line">                       &lt;/include&gt;</span><br><span class="line">                   &lt;/includes&gt;</span><br><span class="line">               &lt;/configuration&gt;</span><br><span class="line">               &lt;executions&gt;</span><br><span class="line">                   &lt;execution&gt;</span><br><span class="line">                       &lt;goals&gt;</span><br><span class="line">                           &lt;goal&gt;repackage&lt;/goal&gt;</span><br><span class="line">                       &lt;/goals&gt;</span><br><span class="line">                   &lt;/execution&gt;</span><br><span class="line">               &lt;/executions&gt;</span><br><span class="line">           &lt;/plugin&gt;</span><br><span class="line">       &lt;/plugins&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!--需要打包的文件--&gt;</span><br><span class="line">       &lt;resources&gt;</span><br><span class="line">           &lt;resource&gt;</span><br><span class="line">               &lt;directory&gt;src/main/java&lt;/directory&gt;</span><br><span class="line">               &lt;includes&gt;</span><br><span class="line">                   &lt;include&gt;**/*.yml&lt;/include&gt;</span><br><span class="line">                   &lt;include&gt;**/*.properties&lt;/include&gt;</span><br><span class="line">                   &lt;include&gt;**/*.xml&lt;/include&gt;</span><br><span class="line">               &lt;/includes&gt;</span><br><span class="line">               &lt;filtering&gt;false&lt;/filtering&gt;</span><br><span class="line">           &lt;/resource&gt;</span><br><span class="line">           &lt;resource&gt;</span><br><span class="line">               &lt;directory&gt;src/main/resources&lt;/directory&gt;</span><br><span class="line">               &lt;includes&gt;</span><br><span class="line">                   &lt;include&gt;**/*.yml&lt;/include&gt;</span><br><span class="line">                   &lt;include&gt;**/*.properties&lt;/include&gt;</span><br><span class="line">                   &lt;include&gt;**/*.xml&lt;/include&gt;</span><br><span class="line">               &lt;/includes&gt;</span><br><span class="line">               &lt;filtering&gt;false&lt;/filtering&gt;</span><br><span class="line">           &lt;/resource&gt;</span><br><span class="line">       &lt;/resources&gt;</span><br><span class="line"></span><br><span class="line">   &lt;/build&gt;</span><br></pre></td></tr></table></figure>
-<p>打包后的项目从几百几十mb变成了几百kb。<br>修改after deploy:<br>path后指定你存放的lib绝对路径。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup java -Dloader.path=/home/lib -jar /home/xxx.ar &gt; nohup.log 2&gt;&amp;1 &amp; </span><br></pre></td></tr></table></figure>
-<h2 id="4-测试"><a href="#4-测试" class="headerlink" title="4.测试"></a>4.测试</h2><p>均全自动部署(上传嗖的一下就过去了哦～)，接下来就是tea time~<br><img src="https://img-blog.csdnimg.cn/b3cf0b0e5a304ef1833342a58ccf71b0.gif" alt="在这里插入图片描述"></p>
+<p><strong>递归解法</strong><br>因为反转后需要将反转后的头节点返回出去，我这里用了临时变量进行了存储。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseListRecursiveDo</span><span class="params">(<span class="keyword">struct</span> ListNode* head,<span class="keyword">struct</span> ListNode** root)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">NULL</span> || head-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        *root = head;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">   &#125;</span><br><span class="line">   reverseListRecursiveDo(head-&gt;next,root)-&gt;next = head;</span><br><span class="line">   <span class="comment">//第一个结点反转后的next指针应该指向NULL，避免回路</span></span><br><span class="line">   head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">   <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">root</span> =</span> (<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">    reverseListRecursiveDo(head,&amp;root);</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法优化，不需要临时变量</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">NULL</span> || head-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//反转后的头节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">reverseHead</span> =</span> reverseList(head-&gt;next);</span><br><span class="line">    <span class="comment">//关键思路</span></span><br><span class="line">    <span class="comment">//假设存在链表：n1-&gt;n2-&gt;n3-&gt;n4-&gt;NULL,那么n3-&gt;n4的反转可以写成n3-&gt;next-&gt;next=n3;</span></span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    <span class="comment">//n1指向NULL,避免回路</span></span><br><span class="line">    head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> reverseHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
         </div>
 
@@ -252,11 +244,7 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/%E7%BB%8F%E9%AA%8C%E7%AF%87/">#经验篇</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/">#自动化部署</a>&nbsp;
+                        <a href="/tags/%E9%93%BE%E8%A1%A8/">#链表</a>&nbsp;
                     </li>
                 
             </ul>
@@ -268,18 +256,33 @@
                     <div class="article-prev">
                         <a class="prev"
                            rel="prev"
-                           href="/2022/04/05/redis-sentinel%E5%93%A8%E5%85%B5%E6%94%BB%E7%95%A5/"
+                           href="/2022/04/06/leetcode994-%E8%85%90%E7%83%82%E7%9A%84%E6%A9%98%E5%AD%90/"
                         >
                             <span class="left arrow-icon flex-center">
                               <i class="fas fa-chevron-left"></i>
                             </span>
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">redis-sentinel哨兵攻略</span>
+                                <span class="post-nav-title-item">leetcode994. 腐烂的橘子</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
                     </div>
                 
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2022/04/05/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8E%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">非对称加密与数字证书</span>
+                                <span class="post-nav-item">下一篇</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
                 
             </div>
         
@@ -466,7 +469,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-idea%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">1.idea配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-toolkit%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">2.toolkit配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BE%9D%E8%B5%96%E5%8C%85%E5%88%86%E7%A6%BB%E9%83%A8%E7%BD%B2%EF%BC%88%E5%85%B3%E9%94%AE%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">3.依赖包分离部署（关键）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">4.测试</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li></ol>
     </div>
 </div>
         </aside>

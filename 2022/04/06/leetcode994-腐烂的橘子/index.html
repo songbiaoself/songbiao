@@ -9,7 +9,7 @@
     
     <title>
         
-            redis主从复制完整攻略 |
+            leetcode994. 腐烂的橘子 |
         
         宋标的blog
     </title>
@@ -150,7 +150,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">redis主从复制完整攻略</span>
+            <span class="title-hover-animation">leetcode994. 腐烂的橘子</span>
         </div>
 
         
@@ -169,8 +169,8 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fas fa-edit"></i>&nbsp;
-        <span class="pc">2022-04-05 21:20:49</span>
-        <span class="mobile">2022-04-05 21:20</span>
+        <span class="pc">2022-04-06 19:04:16</span>
+        <span class="mobile">2022-04-06 19:04</span>
     </span>
     
         <span class="article-categories article-meta-item">
@@ -178,7 +178,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/redis/">redis</a>&nbsp;
+                        <a href="/categories/leetcode/">leetcode</a>&nbsp;
                     </li>
                 
             </ul>
@@ -190,11 +190,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>&nbsp;
+                        <a href="/tags/bfs/">bfs</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">主从复制</a>&nbsp;
+                        | <a href="/tags/%E5%A4%9A%E6%BA%90bfs/">多源bfs</a>&nbsp;
                     </li>
                 
             </ul>
@@ -213,24 +213,39 @@
         
 
         <div class="article-content markdown-body">
-            <h2 id="1-主从配置"><a href="#1-主从配置" class="headerlink" title="1.主从配置"></a>1.主从配置</h2><h3 id="1-1单机"><a href="#1-1单机" class="headerlink" title="1.1单机"></a>1.1单机</h3><p>在服务器中copy一份redis.cnf</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-5.0.3]<span class="comment"># cp redis.conf slave-redis.cnf</span></span><br></pre></td></tr></table></figure>
-<p>修改端口号、pid文件、指定主redis的ip和端口</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost redis-5.0.3]<span class="comment"># vim slave-redis.cnf</span></span><br><span class="line"></span><br><span class="line">port 6380</span><br><span class="line"><span class="comment">#改为唯一即可</span></span><br><span class="line">pidfile /var/run/redis_6380.pid</span><br><span class="line"><span class="comment">#5版本后是replicaof 有的版本可能为slaveof 自己留意</span></span><br><span class="line">replicaof 127.0.0.1 6379</span><br></pre></td></tr></table></figure>
-<h3 id="1-2测试"><a href="#1-2测试" class="headerlink" title="1.2测试"></a>1.2测试</h3><p>启动redis从服务 启动端口为6380的客户端</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis-server slave-redis.cnf </span><br><span class="line">redis-cli -p 6380</span><br></pre></td></tr></table></figure>
-<p>在主redis上添加数据</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; <span class="built_in">set</span> 1 1</span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
-<p>从redis</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6380&gt; get 1</span><br><span class="line"><span class="string">&quot;1&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="2-同步原理"><a href="#2-同步原理" class="headerlink" title="2.同步原理"></a>2.同步原理</h2><p>如果你的redis仅当作缓存来使用，可以不必操太多的心，但是用到了持久化的功能，也就是当作一个数据库来使用，数据的持久性和一致性是必须得以重视！以下内容只针对主从同步原理做了讲解。</p>
-<h3 id="2-1增量同步"><a href="#2-1增量同步" class="headerlink" title="2.1增量同步"></a>2.1增量同步</h3><p>主节点会将自己做出的指令存储到本地buffer中，然后从节点异步的读取指令来尽可能达到和主节点的数据一致，因为buffer的内存有限，buffer的内存结构是一个<strong>环形数组</strong>，从头写到尾时（写完一圈），将会覆盖之前的指令数据。<br><strong>注意：</strong> 如果，从节点网络状态不好，无法和主节点同步数据，没来的及的同步数据被覆盖掉，这时，就需要下面的快照同步。</p>
-<h3 id="2-2快照同步"><a href="#2-2快照同步" class="headerlink" title="2.2快照同步"></a>2.2快照同步</h3><p>这是一个十分耗时的操作。<br>首先主节点会进行一次内存全盘扫描（bgsave），将内存中的所有数据写入到磁盘中，写入完毕时后传送到从节点，从节点接受完毕后，首先将内存清空，然后执行一次全量加载，再然后进行增量同步。<br><strong>注意：</strong> 在从节中快照同步的同时，主节点的操作指令依旧在写到buffer中，如果快照同步十分的耗时，以至于buffer中的指令又被覆盖，那么将陷入死循环中！<br><strong>为了避免死循环，请合适的设置buffer容量参数。</strong></p>
-<h3 id="2-3无盘复制"><a href="#2-3无盘复制" class="headerlink" title="2.3无盘复制"></a>2.3无盘复制</h3><p>自redis 2.8.18版本后，引入了无盘复制，主节点直接通过套接字将内容传递给从节点。主节点一边遍历内存一边将序列化的内容传送到从节点中，从节点先将接收到的数据存入到磁盘中，最后执行一次全量加载。</p>
-<p><strong>新加入的从节点，必须先进行一次快照同步，后再进行增量同步</strong></p>
-<p>文章文献参考《redis深度历险核心原理与应用实践》</p>
-
+            <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>在给定的 <code>m x n</code> 网格 <code>grid</code> 中，每个单元格可以有以下三个值之一：</p>
+<ul>
+<li>值 0 代表空单元格；</li>
+<li>值 1 代表新鲜橘子；</li>
+<li>值 2 代表腐烂的橘子。</li>
+</ul>
+<p>每分钟，腐烂的橘子<strong>周围 4 个方向上相邻</strong>的新鲜橘子都会腐烂。</p>
+<p>返回 直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1 。</p>
+<p>示例 1：<br><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2019/02/16/oranges.png"></p>
+<blockquote>
+<p>输入：grid &#x3D; [[2,1,1],[1,1,0],[0,1,1]]<br>输出：4<br>示例 2：</p>
+</blockquote>
+<blockquote>
+<p>输入：grid &#x3D; [[2,1,1],[0,1,1],[1,0,1]]<br>输出：-1<br>解释：左下角的橘子（第 2 行， 第 0 列）永远不会腐烂，因为腐烂只会发生在 4 个正向上。<br>示例 3：</p>
+</blockquote>
+<blockquote>
+<p>输入：grid &#x3D; [[0,2]]<br>输出：0<br>解释：因为 0 分钟时已经没有新鲜橘子了，所以答案就是 0 。
+ </p>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li>m &#x3D;&#x3D; grid.length</li>
+<li>n &#x3D;&#x3D; grid[i].length</li>
+<li>1 &lt;&#x3D; m, n &lt;&#x3D; 10</li>
+<li>grid[i][j] 仅为 0、1 或 2</li>
+</ul>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/rotting-oranges" >https://leetcode-cn.com/problems/rotting-oranges<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>注意：<br>题目中存在多个腐烂橘子(多个源点)，所有腐烂的橘子会<strong>同时扩散</strong><br>思路:</p>
+<ol>
+<li>将所有腐烂橘子看作一个整体,赋一个初始值0，向外扩散。</li>
+<li>被扩散腐烂的橘子消耗的分钟等于扩散点的值+1，依次继续扩散，直到扩散结束。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[][] xy= &#123;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">orangesRotting</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        LinkedList&lt;<span class="type">int</span>[]&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>();</span><br><span class="line">        Map&lt;Integer,Integer&gt; depth = <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        <span class="type">int</span> m,n;</span><br><span class="line">        <span class="type">int</span> <span class="variable">frish</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        m = grid.length;</span><br><span class="line">        n = grid[<span class="number">0</span>].length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;++j)&#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">cur</span> <span class="operator">=</span> grid[i][j];</span><br><span class="line">                <span class="keyword">if</span>(cur==<span class="number">2</span>)&#123;</span><br><span class="line">                    <span class="comment">//初始0分钟</span></span><br><span class="line">                    depth.put(i*n+j,<span class="number">0</span>);</span><br><span class="line">                    <span class="comment">//将所有腐烂的橘子预先加入队列中</span></span><br><span class="line">                    queue.addFirst(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i,j&#125;);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cur==<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="comment">//统计所有新鲜的橘子数量</span></span><br><span class="line">                    ++frish;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//最后一个腐烂橘子花费的时间</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 腐烂扩散(广度优先遍历)</span></span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            <span class="type">int</span>[] cell = queue.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> cell[<span class="number">0</span>],j = cell[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;<span class="number">4</span>;++k)&#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> i+xy[k][<span class="number">0</span>];</span><br><span class="line">                <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> j+xy[k][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span>(x&gt;=<span class="number">0</span> &amp;&amp; x&lt;m &amp;&amp; y&gt;=<span class="number">0</span> &amp;&amp; y&lt;n &amp;&amp; grid[x][y]==<span class="number">1</span>)&#123;</span><br><span class="line">                    grid[x][y]=<span class="number">2</span>;</span><br><span class="line">                    <span class="comment">//持续扩散</span></span><br><span class="line">                    queue.addLast(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;x,y&#125;);</span><br><span class="line">                    <span class="comment">//花费的分钟等于传播点的值+1</span></span><br><span class="line">                    ans = depth.get(i*n+j)+<span class="number">1</span>;</span><br><span class="line">                    depth.put(x*n+y,ans);</span><br><span class="line">                    <span class="comment">//新鲜橘子数量减1</span></span><br><span class="line">                    --frish;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果还存在新鲜橘子则返回-1</span></span><br><span class="line">        <span class="keyword">return</span> frish==<span class="number">0</span>?ans:-<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
 
         
@@ -239,11 +254,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">#分布式</a>&nbsp;
+                        <a href="/tags/bfs/">#bfs</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
-                        <a href="/tags/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">#主从复制</a>&nbsp;
+                        <a href="/tags/%E5%A4%9A%E6%BA%90bfs/">#多源bfs</a>&nbsp;
                     </li>
                 
             </ul>
@@ -252,29 +267,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/04/05/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E4%B8%8E%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">非对称加密与数字证书</span>
-                                <span class="post-nav-item">上一篇</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/04/05/redis-sentinel%E5%93%A8%E5%85%B5%E6%94%BB%E7%95%A5/"
+                           href="/2022/04/06/leetcode206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">redis-sentinel哨兵攻略</span>
+                                <span class="post-nav-title-item">leetcode206. 反转链表</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex-center">
@@ -468,7 +468,7 @@
         <aside class="page-aside">
             <div class="post-toc-wrap">
     <div class="post-toc">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%BB%E4%BB%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">1.主从配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%E5%8D%95%E6%9C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">1.1单机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2%E6%B5%8B%E8%AF%95"><span class="nav-number">1.2.</span> <span class="nav-text">1.2测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%90%8C%E6%AD%A5%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2.同步原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5"><span class="nav-number">2.1.</span> <span class="nav-text">2.1增量同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2%E5%BF%AB%E7%85%A7%E5%90%8C%E6%AD%A5"><span class="nav-number">2.2.</span> <span class="nav-text">2.2快照同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3%E6%97%A0%E7%9B%98%E5%A4%8D%E5%88%B6"><span class="nav-number">2.3.</span> <span class="nav-text">2.3无盘复制</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li></ol>
     </div>
 </div>
         </aside>
