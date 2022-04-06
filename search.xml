@@ -178,7 +178,9 @@
   <entry>
     <title>leetcode206. 反转链表</title>
     <url>/2022/04/06/leetcode206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer" />
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。</p>
 <p>示例 1：<br><img src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg" alt="图片1"></p>
 <blockquote>
 <p>输入：head &#x3D; [1,2,3,4,5]<br>输出：[5,4,3,2,1]</p>
@@ -215,7 +217,9 @@
   <entry>
     <title>leetcode994. 腐烂的橘子</title>
     <url>/2022/04/06/leetcode994-%E8%85%90%E7%83%82%E7%9A%84%E6%A9%98%E5%AD%90/</url>
-    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>在给定的 <code>m x n</code> 网格 <code>grid</code> 中，每个单元格可以有以下三个值之一：</p>
+    <content><![CDATA[<meta name="referrer" content="no-referrer" />
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>在给定的 <code>m x n</code> 网格 <code>grid</code> 中，每个单元格可以有以下三个值之一：</p>
 <ul>
 <li>值 0 代表空单元格；</li>
 <li>值 1 代表新鲜橘子；</li>
