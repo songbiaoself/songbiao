@@ -220,7 +220,8 @@
             <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ol>
 <li>本次介绍的插件特别适用于小型单体项目部署，摆脱一切的繁琐部署操作，相对与CI&#x2F;CD流程配置更加简单快捷。</li>
 <li>我们每次打包后的项目都特别大，其中主要是依赖的jar包占用了大量的空间，而且每次部署都进行了上传，但每次做修改的只有代码。</li>
-<li><strong>所以代码和jar包分离是提升部署效率的关键。</strong></li>
+<li>服务器性能弱，编译打包速度慢。</li>
+<li><strong>所以选择本地打包，代码和jar包分离是提升部署效率的关键。</strong></li>
 </ol>
 <h2 id="1-idea配置"><a href="#1-idea配置" class="headerlink" title="1.idea配置"></a>1.idea配置</h2><p>1.安装插件（我这里已经安装好了）<br><img src="https://img-blog.csdnimg.cn/677e806c05c64ab8b34ba69d1c6f8307.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
 <h2 id="2-toolkit配置"><a href="#2-toolkit配置" class="headerlink" title="2.toolkit配置"></a>2.toolkit配置</h2><p>1.安装后重启idea，点击add host添加服务器连接<br>host填对应部署的服务器公网ip<br>端口默认22<br>再填入username和password后点add添加即可。<br><img src="https://img-blog.csdnimg.cn/7168886be9044debb3181973a03fb211.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAc29uZ2JpYW_kuLY=,size_20,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"><br>2.点击idea标签页tools&#x2F;Alibaba colud&#x2F;Deploy to Host进入部署脚本页面<br>添加刚刚添加的服务器。</p>

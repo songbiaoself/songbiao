@@ -221,13 +221,13 @@
 <p>输入: s &#x3D; “3z4”<br>输出: [“3z4”,”3Z4”]
  </p>
 </blockquote>
-<p>提示:</p>
+<p><strong>提示:</strong></p>
 <ul>
 <li>1 &lt;&#x3D; s.length &lt;&#x3D; 12</li>
 <li>s 由小写英文字母、大写英文字母和数字组成</li>
 </ul>
 <p>来源：力扣（LeetCode）<br>链接：<a class="link"   target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/letter-case-permutation" >https://leetcode-cn.com/problems/letter-case-permutation<i class="fas fa-external-link-alt"></i></a></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>思路：<br>从题目中可以观察到，出现一个大小写字母的字符就会出现两个版本，n个字符就会有2的n次幂个版本。<br>递归图解：<br><img src="/images/tj_lettersArrange.png" alt="大小写字母全排列"></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>从题目中可以观察到，出现一个大小写字母的字符就会出现两个版本，n个字符就会有2的n次幂个版本。<br>递归图解：<br><img src="/images/tj_lettersArrange.png" alt="大小写字母全排列"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">letterCasePermutation</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        handleRecursive(<span class="keyword">new</span> <span class="title class_">StringBuilder</span>(s),<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleRecursive</span><span class="params">(StringBuilder strBuffer,<span class="type">int</span> curIndex)</span>&#123;</span><br><span class="line">        <span class="comment">//最后一个字符也会出现字母，所以结束条件是在遍历完所有字符后</span></span><br><span class="line">        <span class="keyword">if</span>(curIndex&gt;=strBuffer.length())&#123;</span><br><span class="line">            res.add(strBuffer.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">ch</span> <span class="operator">=</span> strBuffer.charAt(curIndex);</span><br><span class="line">            <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;</span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//版本1</span></span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">                <span class="comment">//字母大小写转换</span></span><br><span class="line">                <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;a&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;z&#x27;</span>)&#123;</span><br><span class="line">                    strBuffer.setCharAt(curIndex,(<span class="type">char</span>)(ch-<span class="number">32</span>));</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;A&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;Z&#x27;</span>)&#123;</span><br><span class="line">                    strBuffer.setCharAt(curIndex,(<span class="type">char</span>)(ch+<span class="number">32</span>));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//版本2（大小写转换）</span></span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
 
@@ -245,6 +245,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/08/leetcode77-%E7%BB%84%E5%90%88/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">leetcode77. 组合</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
