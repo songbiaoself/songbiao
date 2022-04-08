@@ -1,6 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>leetcode70. 爬楼梯</title>
+    <url>/2022/04/08/leetcode70-%E7%88%AC%E6%A5%BC%E6%A2%AF/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer">
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>假设你正在爬楼梯。需要 n 阶你才能到达楼顶。</p>
+<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>输入：n = 2<br>输出：2</p>
+</blockquote>
+<p>解释：有两种方法可以爬到楼顶。</p>
+<ol>
+<li>1 阶 + 1 阶</li>
+<li>2 阶</li>
+</ol>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<p>输入：n = 3<br>输出：3</p>
+</blockquote>
+<p>解释：有三种方法可以爬到楼顶。</p>
+<ol>
+<li>1 阶 + 1 阶 + 1 阶</li>
+<li>1 阶 + 2 阶</li>
+<li>2 阶 + 1 阶</li>
+</ol>
+<p> </p>
+<p><strong>提示：</strong></p>
+<ul>
+<li>1 &lt;= n &lt;= 45</li>
+</ul>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link" href="https://leetcode-cn.com/problems/climbing-stairs">https://leetcode-cn.com/problems/climbing-stairs<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -3.281ex" xmlns="http://www.w3.org/2000/svg" width="35.086ex" height="7.692ex" role="img" focusable="false" viewBox="0 -1950 15507.9 3400"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mo" transform="translate(550,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(939,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(1539,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(2205.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mrow" transform="translate(3261.6,0)"><g data-mml-node="mo"><path data-c="23A7" d="M712 899L718 893V876V865Q718 854 704 846Q627 793 577 710T510 525Q510 524 509 521Q505 493 504 349Q504 345 504 334Q504 277 504 240Q504 -2 503 -4Q502 -8 494 -9T444 -10Q392 -10 390 -9Q387 -8 386 -5Q384 5 384 230Q384 262 384 312T383 382Q383 481 392 535T434 656Q510 806 664 892L677 899H712Z" transform="translate(0,1051)"></path><path data-c="23A9" d="M718 -893L712 -899H677L666 -893Q542 -825 468 -714T385 -476Q384 -466 384 -282Q384 3 385 5L389 9Q392 10 444 10Q486 10 494 9T503 4Q504 2 504 -239V-310V-366Q504 -470 508 -513T530 -609Q546 -657 569 -698T617 -767T661 -812T699 -843T717 -856T718 -876V-893Z" transform="translate(0,-551)"></path><path data-c="23A8" d="M389 1159Q391 1160 455 1160Q496 1160 498 1159Q501 1158 502 1155Q504 1145 504 924Q504 691 503 682Q494 549 425 439T243 259L229 250L243 241Q349 175 421 66T503 -182Q504 -191 504 -424Q504 -600 504 -629T499 -659H498Q496 -660 444 -660T390 -659Q387 -658 386 -655Q384 -645 384 -425V-282Q384 -176 377 -116T342 10Q325 54 301 92T255 155T214 196T183 222T171 232Q170 233 170 250T171 268Q171 269 191 284T240 331T300 407T354 524T383 679Q384 691 384 925Q384 1152 385 1155L389 1159Z" transform="translate(0,0)"></path><svg width="889" height="81" y="1060" x="0" viewBox="0 14.3 889 81"><path data-c="23AA" d="M384 150V266Q384 304 389 309Q391 310 455 310Q496 310 498 309Q502 308 503 298Q504 283 504 150Q504 32 504 12T499 -9H498Q496 -10 444 -10T390 -9Q386 -8 385 2Q384 17 384 150Z" transform="scale(1,0.398)"></path></svg><svg width="889" height="81" y="-641" x="0" viewBox="0 14.3 889 81"><path data-c="23AA" d="M384 150V266Q384 304 389 309Q391 310 455 310Q496 310 498 309Q502 308 503 298Q504 283 504 150Q504 32 504 12T499 -9H498Q496 -10 444 -10T390 -9Q386 -8 385 2Q384 17 384 150Z" transform="scale(1,0.398)"></path></svg></g><g data-mml-node="mtable" transform="translate(889,0)"><g data-mml-node="mtr" transform="translate(0,1200)"><g data-mml-node="mtd"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mo" transform="translate(550,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(939,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(1761.2,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(2761.4,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(3261.4,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(3872.7,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mi" transform="translate(4872.9,0)"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mo" transform="translate(5422.9,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(5811.9,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(6634.1,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(7634.3,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="mo" transform="translate(8134.3,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><g data-mml-node="mtd" transform="translate(9523.3,0)"><g data-mml-node="mtext"><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path data-c="3E" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z" transform="translate(556,0)"></path><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z" transform="translate(1334,0)"></path></g></g></g><g data-mml-node="mtr" transform="translate(0,0)"><g data-mml-node="mtd"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g><g data-mml-node="mtd" transform="translate(9523.3,0)"><g data-mml-node="mtext"><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z" transform="translate(556,0)"></path><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z" transform="translate(1334,0)"></path></g></g></g><g data-mml-node="mtr" transform="translate(0,-1200)"><g data-mml-node="mtd"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mtd" transform="translate(9523.3,0)"><g data-mml-node="mtext"><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z" transform="translate(556,0)"></path><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z" transform="translate(1334,0)"></path></g></g></g></g><g data-mml-node="mo" transform="translate(12246.3,0) translate(0 250)"></g></g></g></g></svg></mjx-container></p>
+<p>递归解法</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">climbStairs</span><span class="params">(<span class="type">int</span> n)</span>{</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">1</span>){</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">2</span>){</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> climbStairs(n<span class="number">-1</span>)+climbStairs(n<span class="number">-2</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>递归效率低，空间复杂度高，且发现重复求和，例如n=5,下列图解<br><img src="/images/tj_fiboRecusrive.png" alt="递归图解"></p>
+<p>算法优化</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">climbStairs</span><span class="params">(<span class="type">int</span> n)</span>{</span><br><span class="line">      <span class="keyword">if</span>(n==<span class="number">1</span>){</span><br><span class="line">          <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">if</span>(n==<span class="number">2</span>){</span><br><span class="line">          <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">      }</span><br><span class="line">      <span class="type">int</span> i = <span class="number">1</span>,j =<span class="number">2</span>;</span><br><span class="line">      <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">3</span>;k&lt;=n;++k){</span><br><span class="line">          sum=i+j;</span><br><span class="line">          i = j;</span><br><span class="line">          j = sum;</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">return</span> sum;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>动态规划</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode46. 全排列</title>
+    <url>/2022/04/07/leetcode46-%E5%85%A8%E6%8E%92%E5%88%97/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer" />
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个不含重复数字的数组 nums ，返回其<strong>所有</strong>可能的全排列 。你可以<strong>按任意顺序</strong>返回答案。</p>
+<p><strong>示例 1</strong>：</p>
+<blockquote>
+<p>输入：nums &#x3D; [1,2,3]<br>输出：[ [1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1] ]</p>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<p>输入：nums &#x3D; [0,1]<br>输出：[ [0,1],[1,0] ]</p>
+</blockquote>
+<p><strong>示例 3：</strong></p>
+<blockquote>
+<p>输入：nums &#x3D; [1]<br>输出：[ [1] ]
+ </p>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 6</li>
+<li>-10 &lt;&#x3D; nums[i] &lt;&#x3D; 10</li>
+<li>nums 中的所有整数 互不相同</li>
+</ul>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/permutations" >https://leetcode-cn.com/problems/permutations<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>以第一个数为基准，基准数不动，基准数后的数进行交换，完成一趟交换后，第2个数与基准数交换，依次再执行基准数后的交换，每个数都做基准数便截止。</p>
+<p><img src="/images/tj_arrange.png" alt="排列图解"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">int</span> src,<span class="type">int</span> dest)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> nums[src];</span><br><span class="line">        nums[src] = nums[dest];</span><br><span class="line">        nums[dest] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">arrange</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">int</span> begin)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(begin==nums.length-<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="comment">//结束条件</span></span><br><span class="line">            List&lt;Integer&gt; t = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;nums.length;++i)&#123;</span><br><span class="line">                t.add(nums[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            res.add(t);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=begin;i&lt;nums.length;i++)&#123;</span><br><span class="line">                <span class="comment">//交换</span></span><br><span class="line">                swap(nums,begin,i);</span><br><span class="line">                <span class="comment">//递归</span></span><br><span class="line">                arrange(nums,begin+<span class="number">1</span>);</span><br><span class="line">                <span class="comment">//恢复</span></span><br><span class="line">                swap(nums,begin,i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">permute</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        arrange(nums,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>排列组合</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode206. 反转链表</title>
+    <url>/2022/04/06/leetcode206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer" />
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。</p>
+<p><strong>示例 1：</strong><br><img src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg" alt="图片1"></p>
+<blockquote>
+<p>输入：head &#x3D; [1,2,3,4,5]<br>输出：[5,4,3,2,1]</p>
+</blockquote>
+<p><strong>示例 2：</strong><br><img src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg"></p>
+<blockquote>
+<p>输入：head &#x3D; [1,2]<br>输出：[2,1]<br>示例 3：</p>
+</blockquote>
+<blockquote>
+<p>输入：head &#x3D; []<br>输出：[]
+ </p>
+</blockquote>
+<p><strong>提示：</strong></p>
+<blockquote>
+<p>链表中节点的数目范围是 [0, 5000]<br>-5000 &lt;&#x3D; Node.val &lt;&#x3D; 5000
+ </p>
+</blockquote>
+<p>进阶：链表可以选用迭代或递归方式完成反转。你能否用两种方法解决这道题？</p>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/reverse-linked-list" >https://leetcode-cn.com/problems/reverse-linked-list<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><strong>迭代解法</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct ListNode *next;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">pre</span> =</span> <span class="literal">NULL</span>,*temp;</span><br><span class="line">    <span class="keyword">while</span>(head!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="comment">//保存下一个节点</span></span><br><span class="line">        temp = head-&gt;next;</span><br><span class="line">        <span class="comment">//指向前一个结点</span></span><br><span class="line">        head-&gt;next = pre;</span><br><span class="line">        <span class="comment">//当前结点作为下一趟遍历的前驱结点</span></span><br><span class="line">        pre = head;</span><br><span class="line">        <span class="comment">//恢复节点</span></span><br><span class="line">        head = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pre;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>递归解法</strong><br>因为反转后需要将反转后的头节点返回出去，我这里用了临时变量进行了存储。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseListRecursiveDo</span><span class="params">(<span class="keyword">struct</span> ListNode* head,<span class="keyword">struct</span> ListNode** root)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">NULL</span> || head-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        *root = head;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">   &#125;</span><br><span class="line">   reverseListRecursiveDo(head-&gt;next,root)-&gt;next = head;</span><br><span class="line">   <span class="comment">//第一个结点反转后的next指针应该指向NULL，避免回路</span></span><br><span class="line">   head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">   <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">root</span> =</span> (<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">    reverseListRecursiveDo(head,&amp;root);</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算法优化，不需要临时变量</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">NULL</span> || head-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//反转后的头节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">reverseHead</span> =</span> reverseList(head-&gt;next);</span><br><span class="line">    <span class="comment">//关键思路</span></span><br><span class="line">    <span class="comment">//假设存在链表：n1-&gt;n2-&gt;n3-&gt;n4-&gt;NULL,那么n3-&gt;n4的反转可以写成n3-&gt;next-&gt;next=n3;</span></span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    <span class="comment">//n1指向NULL,避免回路</span></span><br><span class="line">    head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> reverseHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>链表</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode77. 组合</title>
+    <url>/2022/04/08/leetcode77-%E7%BB%84%E5%90%88/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer" />
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。</p>
+<p>你可以按<strong>任何顺序</strong>返回答案。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>输入：n &#x3D; 4, k &#x3D; 2<br>输出：<br>[<br>  [2,4],<br>  [3,4],<br>  [2,3],<br>  [1,2],<br>  [1,3],<br>  [1,4],<br>]</p>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<p>输入：n &#x3D; 1, k &#x3D; 1<br>输出：[[1]]
+ </p>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li>1 &lt;&#x3D; n &lt;&#x3D; 20</li>
+<li>1 &lt;&#x3D; k &lt;&#x3D; n</li>
+</ul>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/combinations" >https://leetcode-cn.com/problems/combinations<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先画出树状图，理清思路，例如：n &#x3D; 4, k &#x3D; 2，</p>
+<ol>
+<li>以1为基准，和2，3，4组合，</li>
+<li>以2为基准，和3，4组合，</li>
+<li>以3为基准，和4组合</li>
+<li>以4为基准，结束组合</li>
+</ol>
+<p>发现规律，基准数只与基准数后的数字依次组合，基准数&lt;&#x3D;n-k+1。利用回溯算法解题。</p>
+<p><img src="/images/tj_combineBack.png" alt="组合图解"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">    <span class="keyword">private</span> LinkedList&lt;Integer&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combine</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        backRecursive(<span class="number">1</span>,n,k,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">backRecursive</span><span class="params">(<span class="type">int</span> begin,<span class="type">int</span> n,<span class="type">int</span> k,<span class="type">int</span> depth)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(depth==k)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>(queue));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        depth++;</span><br><span class="line">        <span class="comment">//(n-(k-depth))是基准数结束条件</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=begin;i&lt;=(n-(k-depth));i++)&#123;</span><br><span class="line">            queue.offer(i);</span><br><span class="line">            backRecursive(i+<span class="number">1</span>,n,k,depth);</span><br><span class="line">            <span class="comment">//回溯到基准数</span></span><br><span class="line">            queue.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>排列组合</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode784. 字母大小写全排列</title>
+    <url>/2022/04/07/leetcode784-%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E5%85%A8%E6%8E%92%E5%88%97/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer" />
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串 s ，通过将字符串 s 中的每个字母转变大小写，我们可以获得一个新的字符串。<br>返回 所有可能得到的字符串集合 。以 任意顺序 返回输出。</p>
+<p><strong>示例 1：</strong></p>
+<blockquote>
+<p>输入：s &#x3D; “a1b2”<br>输出：[“a1b2”, “a1B2”, “A1b2”, “A1B2”]</p>
+</blockquote>
+<p><strong>示例 2:</strong></p>
+<blockquote>
+<p>输入: s &#x3D; “3z4”<br>输出: [“3z4”,”3Z4”]
+ </p>
+</blockquote>
+<p><strong>提示:</strong></p>
+<ul>
+<li>1 &lt;&#x3D; s.length &lt;&#x3D; 12</li>
+<li>s 由小写英文字母、大写英文字母和数字组成</li>
+</ul>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/letter-case-permutation" >https://leetcode-cn.com/problems/letter-case-permutation<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>从题目中可以观察到，出现一个大小写字母的字符就会出现两个版本，n个字符就会有2的n次幂个版本。<br>递归图解：<br><img src="/images/tj_lettersArrange.png" alt="大小写字母全排列"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">letterCasePermutation</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        handleRecursive(<span class="keyword">new</span> <span class="title class_">StringBuilder</span>(s),<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleRecursive</span><span class="params">(StringBuilder strBuffer,<span class="type">int</span> curIndex)</span>&#123;</span><br><span class="line">        <span class="comment">//最后一个字符也会出现字母，所以结束条件是在遍历完所有字符后</span></span><br><span class="line">        <span class="keyword">if</span>(curIndex&gt;=strBuffer.length())&#123;</span><br><span class="line">            res.add(strBuffer.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">ch</span> <span class="operator">=</span> strBuffer.charAt(curIndex);</span><br><span class="line">            <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;</span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//版本1</span></span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">                <span class="comment">//字母大小写转换</span></span><br><span class="line">                <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;a&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;z&#x27;</span>)&#123;</span><br><span class="line">                    strBuffer.setCharAt(curIndex,(<span class="type">char</span>)(ch-<span class="number">32</span>));</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;A&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;Z&#x27;</span>)&#123;</span><br><span class="line">                    strBuffer.setCharAt(curIndex,(<span class="type">char</span>)(ch+<span class="number">32</span>));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//版本2（大小写转换）</span></span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>排列组合</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>leetcode994. 腐烂的橘子</title>
+    <url>/2022/04/06/leetcode994-%E8%85%90%E7%83%82%E7%9A%84%E6%A9%98%E5%AD%90/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer" />
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>在给定的 <code>m x n</code> 网格 <code>grid</code> 中，每个单元格可以有以下三个值之一：</p>
+<ul>
+<li>值 0 代表空单元格；</li>
+<li>值 1 代表新鲜橘子；</li>
+<li>值 2 代表腐烂的橘子。</li>
+</ul>
+<p>每分钟，腐烂的橘子<strong>周围 4 个方向上相邻</strong>的新鲜橘子都会腐烂。</p>
+<p>返回 直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1 。</p>
+<p><strong>示例 1：</strong><br><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2019/02/16/oranges.png"></p>
+<blockquote>
+<p>输入：grid &#x3D; [[2,1,1],[1,1,0],[0,1,1]]<br>输出：4</p>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<p>输入：grid &#x3D; [[2,1,1],[0,1,1],[1,0,1]]<br>输出：-1<br>解释：左下角的橘子（第 2 行， 第 0 列）永远不会腐烂，因为腐烂只会发生在 4 个正向上。</p>
+</blockquote>
+<p><strong>示例 3：</strong></p>
+<blockquote>
+<p>输入：grid &#x3D; [[0,2]]<br>输出：0<br>解释：因为 0 分钟时已经没有新鲜橘子了，所以答案就是 0 。
+ </p>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li>m &#x3D;&#x3D; grid.length</li>
+<li>n &#x3D;&#x3D; grid[i].length</li>
+<li>1 &lt;&#x3D; m, n &lt;&#x3D; 10</li>
+<li>grid[i][j] 仅为 0、1 或 2</li>
+</ul>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/rotting-oranges" >https://leetcode-cn.com/problems/rotting-oranges<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>注意：<br>题目中存在多个腐烂橘子(多个源点)，所有腐烂的橘子会<strong>同时扩散</strong></p>
+<p>思路:</p>
+<ol>
+<li>将所有腐烂橘子看作一个整体,赋一个初始值0，向外扩散。</li>
+<li>被扩散腐烂的橘子消耗的分钟等于扩散点的值+1，依次继续扩散，直到扩散结束。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[][] xy= &#123;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">orangesRotting</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        LinkedList&lt;<span class="type">int</span>[]&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>();</span><br><span class="line">        Map&lt;Integer,Integer&gt; depth = <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        <span class="type">int</span> m,n;</span><br><span class="line">        <span class="type">int</span> <span class="variable">frish</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        m = grid.length;</span><br><span class="line">        n = grid[<span class="number">0</span>].length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;++j)&#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">cur</span> <span class="operator">=</span> grid[i][j];</span><br><span class="line">                <span class="keyword">if</span>(cur==<span class="number">2</span>)&#123;</span><br><span class="line">                    <span class="comment">//初始0分钟</span></span><br><span class="line">                    depth.put(i*n+j,<span class="number">0</span>);</span><br><span class="line">                    <span class="comment">//将所有腐烂的橘子预先加入队列中</span></span><br><span class="line">                    queue.addFirst(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i,j&#125;);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cur==<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="comment">//统计所有新鲜的橘子数量</span></span><br><span class="line">                    ++frish;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//最后一个腐烂橘子花费的时间</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 腐烂扩散(广度优先遍历)</span></span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            <span class="type">int</span>[] cell = queue.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> cell[<span class="number">0</span>],j = cell[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;<span class="number">4</span>;++k)&#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> i+xy[k][<span class="number">0</span>];</span><br><span class="line">                <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> j+xy[k][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span>(x&gt;=<span class="number">0</span> &amp;&amp; x&lt;m &amp;&amp; y&gt;=<span class="number">0</span> &amp;&amp; y&lt;n &amp;&amp; grid[x][y]==<span class="number">1</span>)&#123;</span><br><span class="line">                    grid[x][y]=<span class="number">2</span>;</span><br><span class="line">                    <span class="comment">//持续扩散</span></span><br><span class="line">                    queue.addLast(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;x,y&#125;);</span><br><span class="line">                    <span class="comment">//花费的分钟等于传播点的值+1</span></span><br><span class="line">                    ans = depth.get(i*n+j)+<span class="number">1</span>;</span><br><span class="line">                    depth.put(x*n+y,ans);</span><br><span class="line">                    <span class="comment">//新鲜橘子数量减1</span></span><br><span class="line">                    --frish;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果还存在新鲜橘子则返回-1</span></span><br><span class="line">        <span class="keyword">return</span> frish==<span class="number">0</span>?ans:-<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>bfs</tag>
+        <tag>多源bfs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>idea项目一键部署增强版（经验篇)</title>
     <url>/2022/04/05/idea%E9%A1%B9%E7%9B%AE%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%E5%A2%9E%E5%BC%BA%E7%89%88%EF%BC%88%E7%BB%8F%E9%AA%8C%E7%AF%87/</url>
     <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><ol>
@@ -174,246 +414,6 @@
       </categories>
       <tags>
         <tag>对称/非加密</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode206. 反转链表</title>
-    <url>/2022/04/06/leetcode206-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer" />
-
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。</p>
-<p><strong>示例 1：</strong><br><img src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg" alt="图片1"></p>
-<blockquote>
-<p>输入：head &#x3D; [1,2,3,4,5]<br>输出：[5,4,3,2,1]</p>
-</blockquote>
-<p><strong>示例 2：</strong><br><img src="https://assets.leetcode.com/uploads/2021/02/19/rev1ex2.jpg"></p>
-<blockquote>
-<p>输入：head &#x3D; [1,2]<br>输出：[2,1]<br>示例 3：</p>
-</blockquote>
-<blockquote>
-<p>输入：head &#x3D; []<br>输出：[]
- </p>
-</blockquote>
-<p><strong>提示：</strong></p>
-<blockquote>
-<p>链表中节点的数目范围是 [0, 5000]<br>-5000 &lt;&#x3D; Node.val &lt;&#x3D; 5000
- </p>
-</blockquote>
-<p>进阶：链表可以选用迭代或递归方式完成反转。你能否用两种方法解决这道题？</p>
-<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/reverse-linked-list" >https://leetcode-cn.com/problems/reverse-linked-list<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><strong>迭代解法</strong></p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct ListNode *next;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span> *<span class="title">pre</span> =</span> <span class="literal">NULL</span>,*temp;</span><br><span class="line">    <span class="keyword">while</span>(head!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="comment">//保存下一个节点</span></span><br><span class="line">        temp = head-&gt;next;</span><br><span class="line">        <span class="comment">//指向前一个结点</span></span><br><span class="line">        head-&gt;next = pre;</span><br><span class="line">        <span class="comment">//当前结点作为下一趟遍历的前驱结点</span></span><br><span class="line">        pre = head;</span><br><span class="line">        <span class="comment">//恢复节点</span></span><br><span class="line">        head = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pre;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>递归解法</strong><br>因为反转后需要将反转后的头节点返回出去，我这里用了临时变量进行了存储。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseListRecursiveDo</span><span class="params">(<span class="keyword">struct</span> ListNode* head,<span class="keyword">struct</span> ListNode** root)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">NULL</span> || head-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        *root = head;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">   &#125;</span><br><span class="line">   reverseListRecursiveDo(head-&gt;next,root)-&gt;next = head;</span><br><span class="line">   <span class="comment">//第一个结点反转后的next指针应该指向NULL，避免回路</span></span><br><span class="line">   head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">   <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">root</span> =</span> (<span class="keyword">struct</span> ListNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">    reverseListRecursiveDo(head,&amp;root);</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>算法优化，不需要临时变量</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">reverseList</span><span class="params">(<span class="keyword">struct</span> ListNode* head)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head==<span class="literal">NULL</span> || head-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//反转后的头节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">reverseHead</span> =</span> reverseList(head-&gt;next);</span><br><span class="line">    <span class="comment">//关键思路</span></span><br><span class="line">    <span class="comment">//假设存在链表：n1-&gt;n2-&gt;n3-&gt;n4-&gt;NULL,那么n3-&gt;n4的反转可以写成n3-&gt;next-&gt;next=n3;</span></span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    <span class="comment">//n1指向NULL,避免回路</span></span><br><span class="line">    head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> reverseHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>链表</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode994. 腐烂的橘子</title>
-    <url>/2022/04/06/leetcode994-%E8%85%90%E7%83%82%E7%9A%84%E6%A9%98%E5%AD%90/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer" />
-
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>在给定的 <code>m x n</code> 网格 <code>grid</code> 中，每个单元格可以有以下三个值之一：</p>
-<ul>
-<li>值 0 代表空单元格；</li>
-<li>值 1 代表新鲜橘子；</li>
-<li>值 2 代表腐烂的橘子。</li>
-</ul>
-<p>每分钟，腐烂的橘子<strong>周围 4 个方向上相邻</strong>的新鲜橘子都会腐烂。</p>
-<p>返回 直到单元格中没有新鲜橘子为止所必须经过的最小分钟数。如果不可能，返回 -1 。</p>
-<p><strong>示例 1：</strong><br><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2019/02/16/oranges.png"></p>
-<blockquote>
-<p>输入：grid &#x3D; [[2,1,1],[1,1,0],[0,1,1]]<br>输出：4</p>
-</blockquote>
-<p><strong>示例 2：</strong></p>
-<blockquote>
-<p>输入：grid &#x3D; [[2,1,1],[0,1,1],[1,0,1]]<br>输出：-1<br>解释：左下角的橘子（第 2 行， 第 0 列）永远不会腐烂，因为腐烂只会发生在 4 个正向上。</p>
-</blockquote>
-<p><strong>示例 3：</strong></p>
-<blockquote>
-<p>输入：grid &#x3D; [[0,2]]<br>输出：0<br>解释：因为 0 分钟时已经没有新鲜橘子了，所以答案就是 0 。
- </p>
-</blockquote>
-<p><strong>提示：</strong></p>
-<ul>
-<li>m &#x3D;&#x3D; grid.length</li>
-<li>n &#x3D;&#x3D; grid[i].length</li>
-<li>1 &lt;&#x3D; m, n &lt;&#x3D; 10</li>
-<li>grid[i][j] 仅为 0、1 或 2</li>
-</ul>
-<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/rotting-oranges" >https://leetcode-cn.com/problems/rotting-oranges<i class="fas fa-external-link-alt"></i></a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>注意：<br>题目中存在多个腐烂橘子(多个源点)，所有腐烂的橘子会<strong>同时扩散</strong></p>
-<p>思路:</p>
-<ol>
-<li>将所有腐烂橘子看作一个整体,赋一个初始值0，向外扩散。</li>
-<li>被扩散腐烂的橘子消耗的分钟等于扩散点的值+1，依次继续扩散，直到扩散结束。</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[][] xy= &#123;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">orangesRotting</span><span class="params">(<span class="type">int</span>[][] grid)</span> &#123;</span><br><span class="line">        LinkedList&lt;<span class="type">int</span>[]&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>();</span><br><span class="line">        Map&lt;Integer,Integer&gt; depth = <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">        <span class="type">int</span> m,n;</span><br><span class="line">        <span class="type">int</span> <span class="variable">frish</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        m = grid.length;</span><br><span class="line">        n = grid[<span class="number">0</span>].length;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;++j)&#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">cur</span> <span class="operator">=</span> grid[i][j];</span><br><span class="line">                <span class="keyword">if</span>(cur==<span class="number">2</span>)&#123;</span><br><span class="line">                    <span class="comment">//初始0分钟</span></span><br><span class="line">                    depth.put(i*n+j,<span class="number">0</span>);</span><br><span class="line">                    <span class="comment">//将所有腐烂的橘子预先加入队列中</span></span><br><span class="line">                    queue.addFirst(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i,j&#125;);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cur==<span class="number">1</span>)&#123;</span><br><span class="line">                    <span class="comment">//统计所有新鲜的橘子数量</span></span><br><span class="line">                    ++frish;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//最后一个腐烂橘子花费的时间</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 腐烂扩散(广度优先遍历)</span></span><br><span class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">            <span class="type">int</span>[] cell = queue.poll();</span><br><span class="line">            <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> cell[<span class="number">0</span>],j = cell[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">0</span>;k&lt;<span class="number">4</span>;++k)&#123;</span><br><span class="line">                <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> i+xy[k][<span class="number">0</span>];</span><br><span class="line">                <span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> j+xy[k][<span class="number">1</span>];</span><br><span class="line">                <span class="keyword">if</span>(x&gt;=<span class="number">0</span> &amp;&amp; x&lt;m &amp;&amp; y&gt;=<span class="number">0</span> &amp;&amp; y&lt;n &amp;&amp; grid[x][y]==<span class="number">1</span>)&#123;</span><br><span class="line">                    grid[x][y]=<span class="number">2</span>;</span><br><span class="line">                    <span class="comment">//持续扩散</span></span><br><span class="line">                    queue.addLast(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;x,y&#125;);</span><br><span class="line">                    <span class="comment">//花费的分钟等于传播点的值+1</span></span><br><span class="line">                    ans = depth.get(i*n+j)+<span class="number">1</span>;</span><br><span class="line">                    depth.put(x*n+y,ans);</span><br><span class="line">                    <span class="comment">//新鲜橘子数量减1</span></span><br><span class="line">                    --frish;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果还存在新鲜橘子则返回-1</span></span><br><span class="line">        <span class="keyword">return</span> frish==<span class="number">0</span>?ans:-<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>bfs</tag>
-        <tag>多源bfs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode46. 全排列</title>
-    <url>/2022/04/07/leetcode46-%E5%85%A8%E6%8E%92%E5%88%97/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer" />
-
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个不含重复数字的数组 nums ，返回其<strong>所有</strong>可能的全排列 。你可以<strong>按任意顺序</strong>返回答案。</p>
-<p><strong>示例 1</strong>：</p>
-<blockquote>
-<p>输入：nums &#x3D; [1,2,3]<br>输出：[ [1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1] ]</p>
-</blockquote>
-<p><strong>示例 2：</strong></p>
-<blockquote>
-<p>输入：nums &#x3D; [0,1]<br>输出：[ [0,1],[1,0] ]</p>
-</blockquote>
-<p><strong>示例 3：</strong></p>
-<blockquote>
-<p>输入：nums &#x3D; [1]<br>输出：[ [1] ]
- </p>
-</blockquote>
-<p><strong>提示：</strong></p>
-<ul>
-<li>1 &lt;&#x3D; nums.length &lt;&#x3D; 6</li>
-<li>-10 &lt;&#x3D; nums[i] &lt;&#x3D; 10</li>
-<li>nums 中的所有整数 互不相同</li>
-</ul>
-<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/permutations" >https://leetcode-cn.com/problems/permutations<i class="fas fa-external-link-alt"></i></a></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>以第一个数为基准，基准数不动，基准数后的数进行交换，完成一趟交换后，第2个数与基准数交换，依次再执行基准数后的交换，每个数都做基准数便截止。</p>
-<p><img src="/images/tj_arrange.png" alt="排列图解"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">int</span> src,<span class="type">int</span> dest)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> nums[src];</span><br><span class="line">        nums[src] = nums[dest];</span><br><span class="line">        nums[dest] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">arrange</span><span class="params">(<span class="type">int</span>[] nums,<span class="type">int</span> begin)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(begin==nums.length-<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="comment">//结束条件</span></span><br><span class="line">            List&lt;Integer&gt; t = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;nums.length;++i)&#123;</span><br><span class="line">                t.add(nums[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            res.add(t);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> i=begin;i&lt;nums.length;i++)&#123;</span><br><span class="line">                <span class="comment">//交换</span></span><br><span class="line">                swap(nums,begin,i);</span><br><span class="line">                <span class="comment">//递归</span></span><br><span class="line">                arrange(nums,begin+<span class="number">1</span>);</span><br><span class="line">                <span class="comment">//恢复</span></span><br><span class="line">                swap(nums,begin,i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">permute</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        arrange(nums,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>排列组合</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode784. 字母大小写全排列</title>
-    <url>/2022/04/07/leetcode784-%E5%AD%97%E6%AF%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E5%85%A8%E6%8E%92%E5%88%97/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer" />
-
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个字符串 s ，通过将字符串 s 中的每个字母转变大小写，我们可以获得一个新的字符串。<br>返回 所有可能得到的字符串集合 。以 任意顺序 返回输出。</p>
-<p><strong>示例 1：</strong></p>
-<blockquote>
-<p>输入：s &#x3D; “a1b2”<br>输出：[“a1b2”, “a1B2”, “A1b2”, “A1B2”]</p>
-</blockquote>
-<p><strong>示例 2:</strong></p>
-<blockquote>
-<p>输入: s &#x3D; “3z4”<br>输出: [“3z4”,”3Z4”]
- </p>
-</blockquote>
-<p><strong>提示:</strong></p>
-<ul>
-<li>1 &lt;&#x3D; s.length &lt;&#x3D; 12</li>
-<li>s 由小写英文字母、大写英文字母和数字组成</li>
-</ul>
-<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/letter-case-permutation" >https://leetcode-cn.com/problems/letter-case-permutation<i class="fas fa-external-link-alt"></i></a></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>从题目中可以观察到，出现一个大小写字母的字符就会出现两个版本，n个字符就会有2的n次幂个版本。<br>递归图解：<br><img src="/images/tj_lettersArrange.png" alt="大小写字母全排列"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;String&gt; <span class="title function_">letterCasePermutation</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        handleRecursive(<span class="keyword">new</span> <span class="title class_">StringBuilder</span>(s),<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleRecursive</span><span class="params">(StringBuilder strBuffer,<span class="type">int</span> curIndex)</span>&#123;</span><br><span class="line">        <span class="comment">//最后一个字符也会出现字母，所以结束条件是在遍历完所有字符后</span></span><br><span class="line">        <span class="keyword">if</span>(curIndex&gt;=strBuffer.length())&#123;</span><br><span class="line">            res.add(strBuffer.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">ch</span> <span class="operator">=</span> strBuffer.charAt(curIndex);</span><br><span class="line">            <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;0&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;9&#x27;</span>)&#123;</span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="comment">//版本1</span></span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">                <span class="comment">//字母大小写转换</span></span><br><span class="line">                <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;a&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;z&#x27;</span>)&#123;</span><br><span class="line">                    strBuffer.setCharAt(curIndex,(<span class="type">char</span>)(ch-<span class="number">32</span>));</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span>(ch&gt;=<span class="string">&#x27;A&#x27;</span> &amp;&amp; ch&lt;=<span class="string">&#x27;Z&#x27;</span>)&#123;</span><br><span class="line">                    strBuffer.setCharAt(curIndex,(<span class="type">char</span>)(ch+<span class="number">32</span>));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//版本2（大小写转换）</span></span><br><span class="line">                handleRecursive(strBuffer,curIndex+<span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>排列组合</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode77. 组合</title>
-    <url>/2022/04/08/leetcode77-%E7%BB%84%E5%90%88/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer" />
-
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。</p>
-<p>你可以按<strong>任何顺序</strong>返回答案。</p>
-<p><strong>示例 1：</strong></p>
-<blockquote>
-<p>输入：n &#x3D; 4, k &#x3D; 2<br>输出：<br>[<br>  [2,4],<br>  [3,4],<br>  [2,3],<br>  [1,2],<br>  [1,3],<br>  [1,4],<br>]</p>
-</blockquote>
-<p><strong>示例 2：</strong></p>
-<blockquote>
-<p>输入：n &#x3D; 1, k &#x3D; 1<br>输出：[[1]]
- </p>
-</blockquote>
-<p><strong>提示：</strong></p>
-<ul>
-<li>1 &lt;&#x3D; n &lt;&#x3D; 20</li>
-<li>1 &lt;&#x3D; k &lt;&#x3D; n</li>
-</ul>
-<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/combinations" >https://leetcode-cn.com/problems/combinations<i class="fas fa-external-link-alt"></i></a></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先画出树状图，理清思路，例如：n &#x3D; 4, k &#x3D; 2，</p>
-<ol>
-<li>以1为基准，和2，3，4组合，</li>
-<li>以2为基准，和3，4组合，</li>
-<li>以3为基准，和4组合</li>
-<li>以4为基准，结束组合</li>
-</ol>
-<p>发现规律，基准数只与基准数后的数字依次组合，基准数&lt;&#x3D;n-k+1。利用回溯算法解题。</p>
-<p><img src="/images/tj_combineBack.png" alt="组合图解"></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">    <span class="keyword">private</span> LinkedList&lt;Integer&gt; queue = <span class="keyword">new</span> <span class="title class_">LinkedList</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">combine</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        backRecursive(<span class="number">1</span>,n,k,<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">backRecursive</span><span class="params">(<span class="type">int</span> begin,<span class="type">int</span> n,<span class="type">int</span> k,<span class="type">int</span> depth)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(depth==k)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>(queue));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        depth++;</span><br><span class="line">        <span class="comment">//(n-(k-depth))是基准数结束条件</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=begin;i&lt;=(n-(k-depth));i++)&#123;</span><br><span class="line">            queue.offer(i);</span><br><span class="line">            backRecursive(i+<span class="number">1</span>,n,k,depth);</span><br><span class="line">            <span class="comment">//回溯到基准数</span></span><br><span class="line">            queue.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>排列组合</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>leetcode70. 爬楼梯</title>
-    <url>/2022/04/08/leetcode70-%E7%88%AC%E6%A5%BC%E6%A2%AF/</url>
-    <content><![CDATA[<meta name="referrer" content="no-referrer">
-
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>假设你正在爬楼梯。需要 n 阶你才能到达楼顶。</p>
-<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
-<p><strong>示例 1：</strong></p>
-<blockquote>
-<p>输入：n = 2<br>输出：2</p>
-</blockquote>
-<p>解释：有两种方法可以爬到楼顶。</p>
-<ol>
-<li>1 阶 + 1 阶</li>
-<li>2 阶</li>
-</ol>
-<p><strong>示例 2：</strong></p>
-<blockquote>
-<p>输入：n = 3<br>输出：3</p>
-</blockquote>
-<p>解释：有三种方法可以爬到楼顶。</p>
-<ol>
-<li>1 阶 + 1 阶 + 1 阶</li>
-<li>1 阶 + 2 阶</li>
-<li>2 阶 + 1 阶</li>
-</ol>
-<p> </p>
-<p><strong>提示：</strong></p>
-<ul>
-<li>1 &lt;= n &lt;= 45</li>
-</ul>
-<p>来源：力扣（LeetCode）<br>链接：<a class="link" href="https://leetcode-cn.com/problems/climbing-stairs">https://leetcode-cn.com/problems/climbing-stairs<i class="fas fa-external-link-alt"></i></a></p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -0.566ex" xmlns="http://www.w3.org/2000/svg" width="60.104ex" height="2.262ex" role="img" focusable="false" viewBox="0 -750 26566 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mo" transform="translate(550,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(939,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(1539,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(2205.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mrow" transform="translate(3261.6,0)"><g data-mml-node="mo"><path data-c="7B" d="M434 -231Q434 -244 428 -250H410Q281 -250 230 -184Q225 -177 222 -172T217 -161T213 -148T211 -133T210 -111T209 -84T209 -47T209 0Q209 21 209 53Q208 142 204 153Q203 154 203 155Q189 191 153 211T82 231Q71 231 68 234T65 250T68 266T82 269Q116 269 152 289T203 345Q208 356 208 377T209 529V579Q209 634 215 656T244 698Q270 724 324 740Q361 748 377 749Q379 749 390 749T408 750H428Q434 744 434 732Q434 719 431 716Q429 713 415 713Q362 710 332 689T296 647Q291 634 291 499V417Q291 370 288 353T271 314Q240 271 184 255L170 250L184 245Q202 239 220 230T262 196T290 137Q291 131 291 1Q291 -134 296 -147Q306 -174 339 -192T415 -213Q429 -213 431 -216Q434 -219 434 -231Z"></path></g><g data-mml-node="mtable" transform="translate(500,0)"><g data-mml-node="mtr"><g data-mml-node="mtd"><g data-mml-node="mi"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mo" transform="translate(550,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(939,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(1761.2,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(2761.4,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mo" transform="translate(3261.4,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(3872.7,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mi" transform="translate(4872.9,0)"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mo" transform="translate(5422.9,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="mi" transform="translate(5811.9,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(6634.1,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(7634.3,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="mo" transform="translate(8134.3,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g><g data-mml-node="mtd" transform="translate(9523.3,0)"><g data-mml-node="mtext"><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path data-c="3E" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z" transform="translate(556,0)"></path><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z" transform="translate(1334,0)"></path></g><g data-mml-node="mtext" fill="red" stroke="red" transform="translate(1834,0)"><path data-c="5C" d="M56 731Q56 740 62 745T75 750Q85 750 92 740Q96 733 270 255T444 -231Q444 -239 438 -244T424 -250Q414 -250 407 -240Q404 -236 230 242T56 731Z"></path><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z" transform="translate(500,0)"></path></g><g data-mml-node="mo" transform="translate(3167.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(4223.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g><g data-mml-node="mtd" transform="translate(15246.9,0)"><g data-mml-node="mtext"><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z" transform="translate(556,0)"></path><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z" transform="translate(1334,0)"></path></g><g data-mml-node="mtext" fill="red" stroke="red" transform="translate(1834,0)"><path data-c="5C" d="M56 731Q56 740 62 745T75 750Q85 750 92 740Q96 733 270 255T444 -231Q444 -239 438 -244T424 -250Q414 -250 407 -240Q404 -236 230 242T56 731Z"></path><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z" transform="translate(500,0)"></path></g><g data-mml-node="mo" transform="translate(3167.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(4223.6,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mtd" transform="translate(20970.4,0)"><g data-mml-node="mtext"><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z" transform="translate(556,0)"></path><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z" transform="translate(1334,0)"></path></g></g></g></g><g data-mml-node="mo" transform="translate(23304.4,0) translate(0 250)"></g></g></g></g></svg></mjx-container></p>
-<p>递归解法</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">climbStairs</span><span class="params">(<span class="type">int</span> n)</span>{</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">1</span>){</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">if</span>(n==<span class="number">2</span>){</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> climbStairs(n<span class="number">-1</span>)+climbStairs(n<span class="number">-2</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
-<p>递归效率低，空间复杂度高，且发现重复求和，例如n=5,下列图解<br><img src="/images/tj_fiboRecusrive.png" alt="递归图解"></p>
-<p>算法优化</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">climbStairs</span><span class="params">(<span class="type">int</span> n)</span>{</span><br><span class="line">      <span class="keyword">if</span>(n==<span class="number">1</span>){</span><br><span class="line">          <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">if</span>(n==<span class="number">2</span>){</span><br><span class="line">          <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">      }</span><br><span class="line">      <span class="type">int</span> i = <span class="number">1</span>,j =<span class="number">2</span>;</span><br><span class="line">      <span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">for</span>(<span class="type">int</span> k=<span class="number">3</span>;k&lt;=n;++k){</span><br><span class="line">          sum=i+j;</span><br><span class="line">          i = j;</span><br><span class="line">          j = sum;</span><br><span class="line">      }</span><br><span class="line">      <span class="keyword">return</span> sum;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-      <tags>
-        <tag>动态规划</tag>
       </tags>
   </entry>
 </search>
