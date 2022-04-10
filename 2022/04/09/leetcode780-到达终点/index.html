@@ -357,7 +357,7 @@ mjx-container[display="true"] + br {
 </li>
 <li>解释：<ul>
 <li><code>tx==sx</code>时,判断 <code>ty&gt;tx &amp;&amp; (ty-sy) % sx == 0</code>，当sx==tx且ty!=sy时，该数的上一个状态只能是(tx,ty-tx),所以ty要大于tx。</li>
-<li><code>(ty-sy) % sx == 0</code>时,多次<code>ty=ty-tx</code>减操作后ty一定会等于sy。</li>
+<li><code>(ty-sy) % sx == 0</code>时,解决ty大数的情况,如：sx=1,sx=6,tx=1,ty=100000。</li>
 </ul>
 </li>
 </ul>
@@ -381,6 +381,21 @@ mjx-container[display="true"] + br {
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2022/04/10/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">观察者模式</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
