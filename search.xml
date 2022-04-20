@@ -507,4 +507,49 @@
         <tag>发布/订阅</tag>
       </tags>
   </entry>
+  <entry>
+    <title>leetcode2. 两数相加</title>
+    <url>/2022/04/21/leetcode2-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/</url>
+    <content><![CDATA[<meta name="referrer" content="no-referrer" />
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你两个<code>非空</code>的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。</p>
+<p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
+<p>你可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
+<p> </p>
+<p><strong>示例 1：</strong><br><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2021/01/02/addtwonumber1.jpg" alt="示例1"></p>
+<blockquote>
+<p>输入：l1 &#x3D; [2,4,3], l2 &#x3D; [5,6,4]<br>输出：[7,0,8]<br>解释：342 + 465 &#x3D; 807.</p>
+</blockquote>
+<p><strong>示例 2：</strong></p>
+<blockquote>
+<p>输入：l1 &#x3D; [0], l2 &#x3D; [0]<br>输出：[0]</p>
+</blockquote>
+<p><strong>示例 3：</strong></p>
+<blockquote>
+<p>输入：l1 &#x3D; [9,9,9,9,9,9,9], l2 &#x3D; [9,9,9,9]<br>输出：[8,9,9,9,0,0,0,1]
+ </p>
+</blockquote>
+<p><strong>提示：</strong></p>
+<ul>
+<li>每个链表中的节点数在范围 [1, 100] 内</li>
+<li>0 &lt;&#x3D; Node.val &lt;&#x3D; 9</li>
+<li>题目数据保证列表表示的数字不含前导零</li>
+</ul>
+<p>来源：力扣（LeetCode）<br>链接：<a class="link"   href="https://leetcode-cn.com/problems/add-two-numbers" >https://leetcode-cn.com/problems/add-two-numbers<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>一眼扫过去觉的很简单，其实这题对我这种新手来说还是有很多细节。</p>
+<ul>
+<li>溢出值（超过10）的相加</li>
+<li>两个链表的长度不一</li>
+<li>最后一位的溢出</li>
+</ul>
+<p>处理好这三点就可以编写代码了，我的思路是递归，将溢出值依次传给下一个节点,相加的最大值不会超过19。<br>短的链表添加节点0。<br>最后判断最后一位的溢出情况。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     struct ListNode *next;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//溢出指的是超过9的数值</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">recursive</span><span class="params">(<span class="type">int</span> add,<span class="keyword">struct</span> ListNode* l1, <span class="keyword">struct</span> ListNode* l2)</span>&#123;</span><br><span class="line">    <span class="comment">//探路,下个节点是不是都为空</span></span><br><span class="line">    <span class="keyword">if</span>(l1-&gt;next==<span class="literal">NULL</span> &amp;&amp; l2-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        l1-&gt;val+=(l2-&gt;val+add);</span><br><span class="line">        <span class="comment">//最后一位可能溢出的处理</span></span><br><span class="line">        <span class="keyword">if</span>(l1-&gt;val&gt;<span class="number">9</span>)&#123;</span><br><span class="line">            l1-&gt;val %=<span class="number">10</span>;</span><br><span class="line">            <span class="comment">//添加一个节点 赋值为1</span></span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">temp</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">            temp-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">            temp-&gt;val=<span class="number">1</span>;</span><br><span class="line">            l1-&gt;next=temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//下一个节点存在一个为空</span></span><br><span class="line">    <span class="keyword">if</span>(l1-&gt;next==<span class="literal">NULL</span> || l2-&gt;next==<span class="literal">NULL</span>)&#123;</span><br><span class="line">        <span class="comment">//为了相加，补0</span></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">n</span> =</span> l1-&gt;next==<span class="literal">NULL</span>?l1:l2;</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">ListNode</span>* <span class="title">temp</span> =</span><span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> ListNode));</span><br><span class="line">        temp-&gt;val=<span class="number">0</span>;</span><br><span class="line">        temp-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">        n-&gt;next=temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当前节点相加溢出处理</span></span><br><span class="line">    l1-&gt;val+=(l2-&gt;val+add);</span><br><span class="line">    <span class="type">int</span> overflow = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(l1-&gt;val&gt;<span class="number">9</span>)&#123;</span><br><span class="line">        l1-&gt;val %=<span class="number">10</span>;</span><br><span class="line">        overflow = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//传递溢出值给下一个节点</span></span><br><span class="line">    recursive(overflow,l1-&gt;next,l2-&gt;next);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> ListNode* <span class="title function_">addTwoNumbers</span><span class="params">(<span class="keyword">struct</span> ListNode* l1, <span class="keyword">struct</span> ListNode* l2)</span>&#123;</span><br><span class="line">    recursive(<span class="number">0</span>,l1,l2);</span><br><span class="line">    <span class="keyword">return</span> l1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>链表</tag>
+      </tags>
+  </entry>
 </search>
