@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="宋标的个人博客">
+    <meta name="author" content="宋标">
+    
+    <title>
+        
+            标签: 贪心 |
+        
+        宋标的blog
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"song_biao.gitee.io","root":"/","language":"zh-CN","path":"search.xml"};
+    KEEP.theme_config = {"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"每天一点点，量变促成质变"},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":true,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.5"};
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+  </script>
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                宋标的blog
+            </a>
+        </div>
+
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                首页
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class="active"
+                               href="/tags"
+                            >
+                                标签
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                分类
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                归档
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class="active"
+                       href="/tags">标签</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">分类</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="tag-container">
+        <div class="tag-name"><i class="fas fa-tag"></i>&nbsp;贪心
+        </div>
+        <div class="tag-post-list">
+            
+<div class="archive-list-container">
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2022</span>
+                <span class="archive-year-post-count">[10]</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%201453.%20%E7%A7%BB%E6%8E%89K%E4%BD%8D%E6%95%B0%E5%AD%97/"
+                        >AcWing 1453. 移掉K位数字</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%201489.%20%E7%94%B0%E5%BF%8C%E8%B5%9B%E9%A9%AC/"
+                        >AcWing 1489. 田忌赛马</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%20104.%20%E8%B4%A7%E4%BB%93%E9%80%89%E5%9D%80/"
+                        >AcWing 104. 货仓选址</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%201536.%20%E5%9D%87%E5%88%86%E7%BA%B8%E7%89%8C/"
+                        >AcWing 1536. 均分纸牌</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%20122.%20%E7%B3%96%E6%9E%9C%E4%BC%A0%E9%80%92/"
+                        >AcWing 122. 糖果传递</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%20145.%20%E8%B6%85%E5%B8%82/"
+                        >AcWing 145. 超市</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%2055.%20%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C/"
+                        >AcWing 55. 连续子数组的最大和</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%201575.%20%E7%9B%9B%E6%B0%B4%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AE%B9%E5%99%A8/"
+                        >AcWing 1575. 盛水最多的容器</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%201028.%20%E5%A4%8D%E5%88%B6%E4%B9%A6%E7%A8%BF/"
+                        >AcWing 1028. 复制书稿</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2022/08/18/AcWing%201262.%20%E9%B1%BC%E5%A1%98%E9%92%93%E9%B1%BC/"
+                        >AcWing 1262. 鱼塘钓鱼</a>
+                        <span class="article-date">08-18</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+</div>
+
+        </div>
+    </div>
+
+    <div class="tag-paginator">
+        <div class="paginator">
+    
+
+    
+</div>
+
+    </div>
+</div>
+
+
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
+            
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">宋标</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动&nbsp;|&nbsp;主题&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.5</a>
+        </div>
+        
+        
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    
+
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
+</div>
+
+    </div>
+
+    
+
+    <div class="image-viewer-container">
+    <img src="">
+</div>
+
+
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+</main>
+
+
+
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
+</html>
